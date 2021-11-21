@@ -1,5 +1,5 @@
-
-## 基础学习
+# 资料
+### 基础学习
 + Bengio所著的《Deep Learning》
 [原文官网](https://www.deeplearningbook.org/)
 [原文翻译](https://github.com/exacity/deeplearningbook-chinese)
@@ -28,7 +28,7 @@
 	数学之美-吴军
 
 
-## 前沿
+### 前沿
 前沿论文：
 	知乎博主总结：https://zhuanlan.zhihu.com/p/65177442
 
@@ -46,8 +46,7 @@
     
     
 # 周报
-## week01
-week1 DONE：
+### week1 DONE：
 
 1. 学习完了吴恩达网课的第一部分：神经网络和深度学习
 2. 手推了以m个样本同时传播的全连接神经网络的前向传播，和后项求导的向量化公式，了解了向量化后的网路每个向量的每一纬度的意义！
@@ -59,7 +58,7 @@ week1 DONE：
     项目状态：项目基本写完，主要问题在于不熟悉python的各种容器，数据在容器间的跳转产生了bug，在调试中
     
 
-PLANE:
+### PLANE:
 + week2主题：感性的认识神经网络，学习优化的方法并优化week1的网络，到kaggle上跑结果
     1. 学习下一个课程：改善深层次神经网络
     2. 看书：deep learning
