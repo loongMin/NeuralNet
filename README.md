@@ -14,14 +14,16 @@
 	
 	
 
-+ [李宏毅-2021](https://app6ca5octe2206.pc.xiaoe-tech.com/detail/p_6049e1c6e4b05a6195befd56/6)
-	https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html
++ 李宏毅-2021 
+[课程](https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html)
+[资料](https://app6ca5octe2206.pc.xiaoe-tech.com/detail/p_6049e1c6e4b05a6195befd56/6)
+	
 
 + 论坛与社区
 
-	https://www.techbeat.net/
+	[Techbeat](https://www.techbeat.net/)
 	
-	https://www.zhihu.com/column/c_1102212337087401984
+	[ZihaoZhao](https://www.zhihu.com/column/c_1102212337087401984)
 
 + 附加资料
 
@@ -33,11 +35,11 @@
 	知乎博主总结：https://zhuanlan.zhihu.com/p/65177442
 
 模型：
-	https://github.com/ZQPei/deep_sort_pytorch
-	https://github.com/open-mmlab/mmtracking
+[deep_sort](https://github.com/ZQPei/deep_sort_pytorch), 
+[mm](https://github.com/open-mmlab/mmtracking)
 
 数据集：
-    Kaggle预测房价：[House Prices - Advanced Regression Techniques](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
++ Kaggle预测房价：[House Prices - Advanced Regression Techniques](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
     
     
     
