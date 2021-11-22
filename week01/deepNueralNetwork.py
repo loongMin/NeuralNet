@@ -82,10 +82,10 @@ class NeuralNet:
 
     # activation function and its derivative
     def sigmoid(z):
-        return 1 / (1 + np.e(-z))
+        return 1 / (1 + np.exp(-z))
 
     def sigmoid_(self, z):
-        a = self.sigmoid()
+        a = self.sigmoid(z)
         return a*(1-a)
 
     def relu(z):
@@ -235,7 +235,8 @@ class NeuralNet:
 
     def backward(self, a, lose):
         dA = lose * np.array(list(map(self.loseLdic[self.loseFunction+"_"],
-                                      np.array(self.A_list[self.x]).flatten('C')
+                                      np.array(self.A_list[self.x]).flatten('C'),
+                                      self.y
                                       ))
                              ).reshape(self.n_list[self.x], -1)
         for i in range(self.x, 0, -1):
