@@ -84,8 +84,8 @@ class NeuralNet:
     def sigmoid(z):
         return 1 / (1 + np.exp(-z))
 
-    def sigmoid_(self, z):
-        a = self.sigmoid(z)
+    def sigmoid_(z):
+        a = 1 / (1 + np.exp(-z))
         return a*(1-a)
 
     def relu(z):
@@ -195,22 +195,26 @@ class NeuralNet:
     def piece_train_network(self, itr, a):
         for i in range(0, itr):
             self.forward()
-            lose_itr  = self.lose()
-            self.lose_list.append(lose_itr)
+            lose_itr = self.lose()
+            self.lose_list.append(lose_itr.sum()/self.m)
             self.backward(a, lose_itr)
+            print("The ", i, "th propagation!")
 
     def load_data_piece(self):
-        test_A = [
+        A_0 = np.array([
             [2, 4, 2, 3, 4, 6, 3, 6, 7, 10],
             [2, 4, 2, 3, 4, 6, 3, 6, 7, 10],
             [2, 4, 2, 3, 4, 6, 3, 6, 7, 10],
             [2, 4, 2, 3, 4, 6, 3, 6, 7, 10],
             [2, 4, 2, 3, 4, 6, 3, 6, 7, 10]
-        ]
-        test_y = [13, 21, 4, 6, 2, 4, 7, 2, 6, 6]
+        ])
+        y = np.array([13, 21, 4, 6, 2, 4, 7, 2, 6, 6])
 
-        self.A_list[0] = test_A
-        self.y = test_y
+        if A_0.shape == (self.n_list[0], self.m):
+            self.A_list[0] = A_0.tolist()
+            self.y = y.tolist()
+        else:
+            print("loading data format is wrong!")
         return
 
     def forward(self):
@@ -220,9 +224,12 @@ class NeuralNet:
             W = np.array(self.W_list[i])
             b = np.array(self.b_list[i])
 
+            # forward propagation
             Z = W.dot(A_front) + b
             A = np.array(list(map(self.actiGdic[self.G_list[i]], Z.flatten('C')))
                          ).reshape(self.n_list[i], -1)
+
+            # refressh the A and Z
             self.Z_list[i] = Z.tolist()
             self.A_list[i] = A.tolist()
             A_front = A
@@ -236,8 +243,7 @@ class NeuralNet:
     def backward(self, a, lose):
         dA = lose * np.array(list(map(self.loseLdic[self.loseFunction+"_"],
                                       np.array(self.A_list[self.x]).flatten('C'),
-                                      self.y
-                                      ))
+                                      self.y))
                              ).reshape(self.n_list[self.x], -1)
         for i in range(self.x, 0, -1):
             self.propagaton_position = i
@@ -245,13 +251,14 @@ class NeuralNet:
             A = np.array(self.A_list[i])
             W = np.array(self.W_list[i])
             b = np.array(self.b_list[i])
+            A_1 = np.array(self.A_list[i-1])
 
+            # backawrd propagation
             dZ = dA * np.array(list(map(self.actiGdic[self.G_list[i]+"_"], Z.flatten('C')))
                                ).reshape(self.n_list[i], -1)
-            dW = dZ * A.T
-            db = np.sum(dZ, axis=1, keepdims=True)
-
-            dA = W.T * dZ
+            dW = np.dot(dZ, A_1.T) / self.m
+            db = np.sum(dZ, axis=1, keepdims=True) / self.m
+            dA = np.dot(W.T, dZ)
 
             # refresh the W and b
             W = W - a * dW
@@ -276,7 +283,8 @@ if __name__ == '__main__':
     neuralNet.show_all_parameters_pattern()
 
     neuralNet.load_data_piece()
-    neuralNet.piece_train_network(10, 0.03)
+    neuralNet.piece_train_network(1000, 0.3)
+    neuralNet.show_all_parameters_pattern()
     neuralNet.show_lose()
 
 
