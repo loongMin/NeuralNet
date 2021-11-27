@@ -1,10 +1,10 @@
+import re
 import numpy as np
 import matplotlib.pyplot as plt
-import re
 import pandas as pd
 
 '''
-Activation function:
+#Activation function:
     ReLu
         forward: g(z) = max(0, z)
         backward: g'(z) = int(z>=0)
@@ -18,18 +18,18 @@ Activation function:
         backward: g'(z) = a(1-a)
         
         
-lose function for binary-classification
+#lose function for binary-classification
     L(a, y) = - (y·ln(a) + (1-y)ln·(1-a))
     L'(a) = - (y/a + (1-y)/(1-a))
 
-lose function for regression
+#lose function for regression
     L(a, y) = EMS(a, y) = (a-y)^2
     L'(a) = 2|a-y|
 
 '''
 
 '''
-layer model:
+#layer model:
     forward:
         Z = W · A_1 + b
         A = g(Z)
@@ -264,6 +264,12 @@ class NeuralNet:
 
 if __name__ == '__main__':
     neuralNet = NeuralNet()
+    df_x = pd.read_csv("./data/house_price/test.csv")
+    df_y = pd.read_csv("./data/house_price/price.csv")
+    features = ['MSSubClass', 'LotFrontage', 'LotArea']
+    x = np.array(df_x[features].T)
+    y = np.array([np.array(df_y['SalePrice'].T).tolist()])
+
 
 
     neuralNet.load_data_piece(x, y)
@@ -272,8 +278,3 @@ if __name__ == '__main__':
     neuralNet.show_lose()
 
 
-    df_x = pd.read_csv("./data/house_price/test.csv")
-    df_y = pd.read_csv("./data/house_price/price.csv")
-    features = ['MSSubClass', 'LotFrontage', 'LotArea']
-    x = np.array(df_x[features].T)
-    y = np.array([np.array(df_y['SalePrice'].T).tolist()])
