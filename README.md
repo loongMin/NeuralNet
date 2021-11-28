@@ -40,8 +40,10 @@
 
 数据集：
 + Kaggle预测房价：[House Prices - Advanced Regression Techniques](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
-    
-    
+
+
+
+
     
     
     
@@ -63,18 +65,48 @@
     映射函数访问不到self，在类中，self不能作为参数
     映射序列只能是行向量，并且numpy的形状变换用flatten，不要用reshape    
 
+### week2 DONE:
+1. 学习完成吴恩达网课第二部分：改善深层次神经网络，内容包括：
+2. 看了《deep learning》中前三章
+3. 复习了模型评估的各种方法，数据预处理，bias与variance等等
 
-
-### PLANE:
-+ week2主题：感性的认识神经网络，学习优化的方法并优化week1的网络，到kaggle上跑结果
-    1. 学习下一个课程：改善深层次神经网络
-    2. 看书：deep learning
-    3. 复习学过的课程：《机器学习》里各种对模型评估的方法
-    4. 用kaggle上的多个数据集（如房价预测数据集）跑设计完成的全链接网络模型，尝试各种优化的方法
-    
+### PLANE:    
 + week3主题：学习网络模型和视觉特征
-    1. 主要学习，吴恩达的课程中：《卷积神经网络》和《序列模型》
-    2. 复习《计算机视觉》课程中，提取图形特征的方法，以及相关一些算法
-    3. 手撕算法
+    1. 学习吴恩达的课程中：《结构化机器学习项目》、《卷积神经网络》和《序列模型》
+    2. 阅读《deep learning》
+    2. 复习《计算机视觉》、《数字图像处理》课程中，提取图形特征的方法，以及相关一些算法
+    3. 全链接网络做minist-handwriting-digits数据集，尝试多种方法和参数。并阅读此数据集上[全链接网络的论文](http://yann.lecun.com/exdb/mnist/)学习他人的参数和背后的思想
+    ![](./md_img/minist-nn-paper.png)
+    4. 使用卷积网络模型做minist-handwriting-digits数据集，尝试多种方法和参数。并阅读此数据集上[全链接网络的论文](http://yann.lecun.com/exdb/mnist/)学习他人的参数和背后的思想
+    ![](./md_img/minist_convolutional_nets.png)
     
-+ week4主题：开始读前沿论文
++ week4主题
+    继续看minist-handwriting-digits数据集上的论文和模型
+    阅读《deep learning》
+    阅读《java 编程思想》
+    使用现有框架，跑一些与目标检测、追踪相关模型
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------
+### 资料索引记录：
+ROC曲线在二十世纪八十年代后期被引入机器学习[Spackman, 1989]
+AUC则是从九十年代中期起在机器学习领域广为使用[Bradley,1997].
+[Hand and Till,2001]将ROC曲线从二分类任务推广到多分类任务.
+[Fawcett,2006]综述了ROC曲线的用途.
+
+[Drummond and Holte,2006]发明了代价曲线.
+代价敏感学习[Elkan,2001;Zhou and Liu,2006]专门研究非均等代价下的学习。
+
+自助采样法,[Efron and Tibshirani, 1993]
+
+[Dietterich,1998]指出了常规k折交叉验证法存在的风险,并提出了5*2折交叉验证法.
+[Demsar, 2006]讨论了对多个算法进行比较检验的方法.
+
+[Geman et al.,1992]针对回归任务给出了偏差-方差-协方差分解，后来被简称为偏差-方差分解。
+但仅基于均方误差的回归任务中推导，对分类任务，由于0/1损失函数的跳变性,理论上推导出偏差-方差分解很困难。
+已有多种方法可通过试验队偏差和方差进行估计[Kong and Dietterich,1995;Kohavi and Wolpert,1996; Breiman,1996;Friedman,1997;Domingos,2000].

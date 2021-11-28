@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="309c26b2-71d9-4820-a36b-dad3bdd27e6b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/md_img/minist-nn-paper.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/md_img/minist_convolutional_nets.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlbook_cn_v0.5-beta.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/=1.3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/data/house_price/data_description.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/data/house_price/price.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/data/house_price/test.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/data/house_price/train.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/t10k-images-idx3-ubyte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/t10k-labels-idx1-ubyte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/train-images-idx3-ubyte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/train-labels-idx1-ubyte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppt/机器学习/本科机器学习-ch00数学基础-桑基韬.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/ppt/机器学习/本科机器学习-ch00数学基础-桑基韬.pptx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/week01/.ipynb_checkpoints/Test-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/week01/.ipynb_checkpoints/Test-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/week01/Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/week01/Test.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/week01/deepNueralNetwork.py" beforeDir="false" afterPath="$PROJECT_DIR$/week01/deepNueralNetwork.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/week02/deepNueralNetwork.py" beforeDir="false" afterPath="$PROJECT_DIR$/week02/neuralNet2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,11 +38,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/week01/deepNueralNetwork.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="266" column="4" lean-forward="true" selection-start-line="266" selection-start-column="4" selection-end-line="270" selection-end-column="58" />
+            <state relative-caret-position="399">
+              <caret line="301" column="28" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="340">
+                <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/week02/neuralNet2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3840">
+              <caret line="259" selection-start-line="259" selection-end-line="276" selection-end-column="17" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -74,16 +103,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/week01/test.py" />
+        <option value="$PROJECT_DIR$/week02/deepNueralNetwork.py" />
+        <option value="$PROJECT_DIR$/week02/neuralNet2.py" />
         <option value="$PROJECT_DIR$/week01/deepNueralNetwork.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="25" />
     <option name="y" value="25" />
-    <option name="width" value="1657" />
+    <option name="width" value="1093" />
     <option name="height" value="945" />
   </component>
   <component name="ProjectView">
@@ -102,20 +132,7 @@
             <path>
               <item name="objectTracking" type="b2602c69:ProjectViewProjectNode" />
               <item name="objectTracking" type="462c0819:PsiDirectoryNode" />
-              <item name="week01" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="objectTracking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="objectTracking" type="462c0819:PsiDirectoryNode" />
-              <item name="week01" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="objectTracking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="objectTracking" type="462c0819:PsiDirectoryNode" />
-              <item name="week01" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="house_price" type="462c0819:PsiDirectoryNode" />
+              <item name="md_img" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -137,6 +154,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/md_img" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -177,9 +199,6 @@
       <module name="objectTracking" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/week01" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -247,7 +266,8 @@
       <workItem from="1637863171182" duration="5181000" />
       <workItem from="1637929057044" duration="7697000" />
       <workItem from="1637996632905" duration="890000" />
-      <workItem from="1638019880215" duration="326000" />
+      <workItem from="1638019880215" duration="2818000" />
+      <workItem from="1638087663492" duration="3438000" />
     </task>
     <task id="LOCAL-00001" summary="ok！">
       <created>1637503408642</created>
@@ -267,13 +287,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41226000" />
+    <option name="totallyTimeSpent" value="47156000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1680" height="945" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.16483517" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13736264" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -287,12 +307,12 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.2510204" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3293979" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50061053" side_tool="true" weight="0.32959184" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="11" sideWeight="0.4993895" visible="true" weight="0.48996457" />
+      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.4993895" visible="true" weight="0.27863047" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.33821735" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.33821735" />
       <window_info anchor="right" id="R Packages" order="4" weight="0.32967034" />
       <window_info anchor="right" id="Database" order="5" weight="0.32967034" />
       <window_info anchor="right" id="R Graphics" order="6" weight="0.32967034" />
@@ -460,26 +480,8 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/week01/data/house_price/sample_submission.csv" />
-    <entry file="file://$PROJECT_DIR$/week01/data/house_price/test.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-872" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/week01/data/house_price/train.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-251" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="475">
-            <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/week01/data/house_price/test.csv" />
+    <entry file="file://$PROJECT_DIR$/week01/data/house_price/train.csv" />
     <entry file="file://$USER_HOME$/.conda/envs/week01/lib/python3.7/site-packages/pandas/io/common.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
@@ -494,13 +496,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/week01/data/house_price/data_description.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" selection-start-line="17" selection-start-column="47" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/week01/data/house_price/data_description.txt" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -531,11 +527,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/week01/deepNueralNetwork.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="266" column="4" lean-forward="true" selection-start-line="266" selection-start-column="4" selection-end-line="270" selection-end-column="58" />
+        <state relative-caret-position="399">
+          <caret line="301" column="28" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/week02/neuralNet2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3840">
+          <caret line="259" selection-start-line="259" selection-end-line="276" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/md_img/minist-nn-paper.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="340">
+            <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

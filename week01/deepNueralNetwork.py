@@ -2,6 +2,8 @@ import re
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import torch
+import torchvision
 
 '''
 #Activation function:
@@ -260,9 +262,7 @@ class NeuralNet:
         plt.show()
 
 
-
-
-if __name__ == '__main__':
+def house_price():
     neuralNet = NeuralNet()
     df_x = pd.read_csv("./data/house_price/test.csv")
     df_y = pd.read_csv("./data/house_price/price.csv")
@@ -270,11 +270,40 @@ if __name__ == '__main__':
     x = np.array(df_x[features].T)
     y = np.array([np.array(df_y['SalePrice'].T).tolist()])
 
-
-
     neuralNet.load_data_piece(x, y)
     neuralNet.creat_neural_network()
     neuralNet.piece_train_network(10, 0.3)
     neuralNet.show_lose()
+
+
+def minist_hand_writing():
+    train_loader = torch.utils.data.DataLoader(
+                    torchvision.datasets.MNIST('./../data/', train=True, download=False,
+                                               transform=torchvision.transforms.Compose([
+                                                   torchvision.transforms.ToTensor(),
+                                                   torchvision.transforms.Normalize(
+                                                       (0.1307,), (0.3081,))
+                                               ])),
+                    batch_size=128, shuffle=True)
+
+    test_loader = torch.utils.data.DataLoader(
+                    torchvision.datasets.MNIST('./../data/', train=False, download=False,
+                                               transform=torchvision.transforms.Compose([
+                                                   torchvision.transforms.ToTensor(),
+                                                   torchvision.transforms.Normalize(
+                                                       (0.1307,), (0.3081,))
+                                               ])),
+                    batch_size=128, shuffle=True)
+
+    train_batch = enumerate(train_loader)
+    batch_idx, (train_imgs, train_labels) = next(train_batch)
+
+    print(train_imgs.shape)
+    print(train_labels.shape)
+
+
+
+if __name__ == '__main__':
+    minist_hand_writing()
 
 
