@@ -18,29 +18,23 @@ import pandas as pd
         backward: g'(z) = a(1-a)
         
         
-#lose function for binary-classification
-    L(a, y) = - (y·ln(a) + (1-y)ln·(1-a))
-    L'(a) = - (y/a + (1-y)/(1-a))
+#lose function 
+    binary-classification:
+        L(a, y) = - (y·ln(a) + (1-y)ln·(1-a))
+        L'(a) = - (y/a + (1-y)/(1-a))
 
-#lose function for regression
-    L(a, y) = EMS(a, y) = (a-y)^2
-    L'(a) = 2|a-y|
+    regression:
+        L(a, y) = EMS(a, y) = (a-y)^2
+        L'(a) = 2|a-y|
 '''
 
+
 '''
-#layer model:
+# batch normalization 
     forward:
-        Z = W · A_1 + b
-        A = g(Z)
+    
     backward:
-        dZ = dA * f'(Z)
-        dW = dZ · A_1.T
-        db = np.sum(dZ, axis=1, keepdim =true) 
-        dA_1 = W.T · dZ
-    
-    
-    parameters:
-        W, b Z A
+
     
     hyper parameters:
         #learning rate: a
@@ -270,8 +264,29 @@ def house_price():
     neuralNet.piece_train_network(10, 0.3)
     neuralNet.show_lose()
 
-def minist_hand_writing:
+
+def minist_hand_writing(batch_size_train, batch_size_test):
     neuralNet = NeuralNet()
+    import torch.utils.data as Data
+    import torchvision
+    train_loader = Data.DataLoader(
+        torchvision.datasets.MNIST('./../data/', train=True, download=True,
+                                   transform=torchvision.transforms.Compose([
+                                       torchvision.transforms.ToTensor(),
+                                       torchvision.transforms.Normalize(
+                                           (0.1307,), (0.3081,))
+                                   ])),
+        batch_size=batch_size_train, shuffle=True)
+
+    test_loader = Data.DataLoader(
+        torchvision.datasets.MNIST('./../data/', train=False, download=True,
+                                   transform=torchvision.transforms.Compose([
+                                       torchvision.transforms.ToTensor(),
+                                       torchvision.transforms.Normalize(
+                                           (0.1307,), (0.3081,))
+                                   ])),
+        batch_size=batch_size_test, shuffle=True)
+
 
 if __name__ == '__main__':
     house_price()

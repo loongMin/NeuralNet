@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="309c26b2-71d9-4820-a36b-dad3bdd27e6b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/md_img/minist-nn-paper.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/md_img/minist_convolutional_nets.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modingRecord.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/t10k-images-idx3-ubyte" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/t10k-labels-idx1-ubyte" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/train-images-idx3-ubyte" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/minist-handwriting-digits/train-labels-idx1-ubyte" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppt/机器学习/本科机器学习-ch00数学基础-桑基韬.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/ppt/机器学习/本科机器学习-ch00数学基础-桑基韬.pptx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/.ipynb_checkpoints/Test-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/week01/.ipynb_checkpoints/Test-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/week01/Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/week01/Test.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/week01/deepNueralNetwork.py" beforeDir="false" afterPath="$PROJECT_DIR$/week01/deepNueralNetwork.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/week02/deepNueralNetwork.py" beforeDir="false" afterPath="$PROJECT_DIR$/week02/neuralNet2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/week02/neuralNet2.py" beforeDir="false" afterPath="$PROJECT_DIR$/week02/neuralNet2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/week01/deepNueralNetwork.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="301" column="28" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
+            <state relative-caret-position="-2174">
+              <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -50,23 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="340">
-                <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/week02/neuralNet2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3840">
-              <caret line="259" selection-start-line="259" selection-end-line="276" selection-end-column="17" />
+            <state relative-caret-position="60">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -105,9 +86,10 @@
         <option value="$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py" />
         <option value="$PROJECT_DIR$/week01/test.py" />
         <option value="$PROJECT_DIR$/week02/deepNueralNetwork.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/modingRecord.md" />
         <option value="$PROJECT_DIR$/week02/neuralNet2.py" />
         <option value="$PROJECT_DIR$/week01/deepNueralNetwork.py" />
-        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -121,7 +103,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -138,6 +119,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -267,7 +249,8 @@
       <workItem from="1637929057044" duration="7697000" />
       <workItem from="1637996632905" duration="890000" />
       <workItem from="1638019880215" duration="2818000" />
-      <workItem from="1638087663492" duration="3438000" />
+      <workItem from="1638087663492" duration="6081000" />
+      <workItem from="1638180295374" duration="8738000" />
     </task>
     <task id="LOCAL-00001" summary="ok！">
       <created>1637503408642</created>
@@ -287,13 +270,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47156000" />
+    <option name="totallyTimeSpent" value="58537000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1680" height="945" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13736264" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13858365" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -525,36 +508,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/week01/deepNueralNetwork.py">
+    <entry file="file://$PROJECT_DIR$/md_img/minist-nn-paper.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$USER_HOME$/.conda/envs/week01/lib/python3.7/site-packages/PIL/Image.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="301" column="28" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="195">
+          <caret line="2824" selection-start-line="2824" selection-end-line="2824" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modingRecord.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="487">
+            <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="413">
+            <caret line="83" selection-start-line="83" selection-end-line="83" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/week02/neuralNet2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3840">
-          <caret line="259" selection-start-line="259" selection-end-line="276" selection-end-column="17" />
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/md_img/minist-nn-paper.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="340">
-            <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/week01/deepNueralNetwork.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2174">
+          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -81,6 +81,7 @@
     ![](./md_img/minist_convolutional_nets.png)
     
 + week4主题
+
     继续看minist-handwriting-digits数据集上的论文和模型
     阅读《deep learning》
     阅读《java 编程思想》
