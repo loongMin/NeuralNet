@@ -2,9 +2,6 @@ import re
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import torch
-import torchvision
-from PIL import Image
 
 '''
 #Activation function:
@@ -19,32 +16,26 @@ from PIL import Image
     sigmoid
         forward: a = g(z) = 1/(1+e^(-z));
         backward: g'(z) = a(1-a)
+    
+    
         
-        
-#lose function for binary-classification
-    L(a, y) = - (y·ln(a) + (1-y)ln·(1-a))
-    L'(a) = - (y/a + (1-y)/(1-a))
+#lose function 
+    binary-classification:
+        L(a, y) = - (y·ln(a) + (1-y)ln·(1-a))
+        L'(a) = - (y/a + (1-y)/(1-a))
 
-#lose function for regression
-    L(a, y) = EMS(a, y) = (a-y)^2
-    L'(a) = 2|a-y|
-
+    regression:
+        L(a, y) = EMS(a, y) = (a-y)^2
+        L'(a) = 2|a-y|
 '''
 
+
 '''
-#layer model:
+# batch normalization 
     forward:
-        Z = W · A_1 + b
-        A = g(Z)
+    
     backward:
-        dZ = dA * f'(Z)
-        dW = dZ · A_1.T
-        db = np.sum(dZ, axis=1, keepdim =true) 
-        dA_1 = W.T · dZ
-    
-    
-    parameters:
-        W, b Z A
+
     
     hyper parameters:
         #learning rate: a
@@ -64,16 +55,15 @@ class NeuralNet:
     W_list = []
     b_list = []
 
-    loseFunction = ""   # lose function type
-    y = []              # target y
+    loseFunction = ""  # lose function type
+    y = []  # target y
 
-    softmax_layer_sum = 0   # for softmax layer backward propagation
     # hyperparameters
-    l = 0           # number of layers
-    n_list = []     # number of units in every layer
-    m = 16          # m exmples in training
-    a = 0.03        # learning rate
-    itr = 128       # times of iteration
+    l = 0  # number of layers
+    n_list = []  # number of units in every layer
+    m = 16  # m exmples in training
+    a = 0.03  # learning rate
+    itr = 128  # times of iteration
 
     # train state record
     lose_list = []  # lose of mean in every iteration
@@ -84,7 +74,7 @@ class NeuralNet:
 
     def sigmoid_(z):
         a = 1 / (1 + np.exp(-z))
-        return a*(1-a)
+        return a * (1 - a)
 
     def relu(z):
         return max(0, z)
@@ -98,20 +88,12 @@ class NeuralNet:
     def leakyRelu_(z):
         return max(0.01, int(z >= 0))
 
-    def softmax(z):
-        return np.exp(z)
-
-    def softmax_(z):
-        return np.exp(z)
-
     actiGdic = {"sigmoid": sigmoid,
                 "sigmoid_": sigmoid_,
                 "relu": relu,
                 "relu_": relu_,
                 "leakyRelu": leakyRelu,
-                "leakyRelu_": leakyRelu_,
-                "softmax": softmax,
-                "softmax_": softmax_}
+                "leakyRelu_": leakyRelu_}
 
     # register lose function and its derivative to dictionary loseLdic
     def L_binaryClassfication(a, y):
@@ -121,23 +103,15 @@ class NeuralNet:
         return -(y / a + (1 - y) / (1 - a))
 
     def L_regression(a, y):
-        return (a - y)**2
+        return (a - y) ** 2
 
     def L_regression_(a, y):
         return 2 * (a - y)
 
-    def L_softmax(a, y):
-        return -y * np.log(a)
-
-    def L_softmax_(a, y):
-        return -y / a
-
     loseLdic = {"L_b": L_binaryClassfication,
                 "L_b_": L_binaryClassfication_,
                 "L_r": L_regression,
-                "L_r_": L_regression_,
-                "L_softmax": L_softmax,
-                "L_softmax_": L_softmax_}
+                "L_r_": L_regression_}
 
     #
     def __init__(self):
@@ -208,13 +182,12 @@ class NeuralNet:
         print("======================================================================")
         print("y:", np.array(self.y).shape)
 
-    #
-    # batch training
+    # training part
     def piece_train_network(self, itr, a):
         for i in range(0, itr):
             self.forward()
             lose_itr = self.lose()
-            self.lose_list.append(lose_itr.sum()/self.m)
+            self.lose_list.append(lose_itr.sum() / self.m)
 
             self.backward(a, lose_itr)
             print("The ", i, "th propagation!")
@@ -229,8 +202,6 @@ class NeuralNet:
             Z = W.dot(A_front) + b
             A = np.array(list(map(self.actiGdic[self.G_list[i]], Z.flatten('C')))
                          ).reshape(self.n_list[i], -1)
-            self.softmax_layer_sum = A.sum()
-            if(self.G_list[i] == "softmax"): A = A / self.softmax_layer_sum  # only for softmax classification
 
             # refressh the A and Z
             self.Z_list[i] = Z.tolist()
@@ -242,15 +213,15 @@ class NeuralNet:
         y = np.array(self.y)
         if y_hat.shape == y.shape:
             return np.array(list(map(self.loseLdic[self.loseFunction],
-                                 y_hat.flatten('C'),
-                                 y.flatten('C')))
+                                     y_hat.flatten('C'),
+                                     y.flatten('C')))
                             ).reshape(self.n_list[self.l], -1)
         else:
             print("the last layer did not pattern the format of y")
             exit(-1)
 
     def backward(self, a, lose):
-        dA = lose * np.array(list(map(self.loseLdic[self.loseFunction+"_"],
+        dA = lose * np.array(list(map(self.loseLdic[self.loseFunction + "_"],
                                       np.array(self.A_list[self.l]).flatten('C'),
                                       np.array(self.y).flatten('C')))
                              ).reshape(self.n_list[self.l], -1)
@@ -258,16 +229,18 @@ class NeuralNet:
             Z = np.array(self.Z_list[i])
             W = np.array(self.W_list[i])
             b = np.array(self.b_list[i])
-            A_1 = np.array(self.A_list[i-1])
+            A_1 = np.array(self.A_list[i - 1])
 
             # backward propagation
-            dZ = dA * np.array(list(map(self.actiGdic[self.G_list[i]+"_"], Z.flatten('C')))
+            dZ = dA * np.array(list(map(self.actiGdic[self.G_list[i] + "_"], Z.flatten('C')))
                                ).reshape(self.n_list[i], -1)
-
             dW = np.dot(dZ, A_1.T) / self.m
             db = np.sum(dZ, axis=1, keepdims=True) / self.m
             dA = np.dot(W.T, dZ)
 
+            if i == 1:
+                print("---------------------------------------------------------------")
+                print(dW)
             # refresh the W and b
             W = W - a * dW
             b = b - a * db
@@ -277,9 +250,6 @@ class NeuralNet:
     def show_lose(self):
         plt.plot(self.lose_list)
         plt.show()
-
-    #
-    #
 
 
 def house_price():
@@ -296,46 +266,31 @@ def house_price():
     neuralNet.show_lose()
 
 
-def minist_hand_writing():
-    train_loader = torch.utils.data.DataLoader(
-        torchvision.datasets.MNIST('./../data/', train=True, download=False,
+def minist_hand_writing(batch_size_train, batch_size_test):
+    neuralNet = NeuralNet()
+    import torch.utils.data as Data
+    import torchvision
+    train_loader = Data.DataLoader(
+        torchvision.datasets.MNIST('./../data/', train=True, download=True,
                                    transform=torchvision.transforms.Compose([
                                        torchvision.transforms.ToTensor(),
                                        torchvision.transforms.Normalize(
                                            (0.1307,), (0.3081,))
                                    ])),
-        batch_size=128, shuffle=True)
+        batch_size=batch_size_train, shuffle=True)
 
-    test_loader = torch.utils.data.DataLoader(
-        torchvision.datasets.MNIST('./../data/', train=False, download=False,
+    test_loader = Data.DataLoader(
+        torchvision.datasets.MNIST('./../data/', train=False, download=True,
                                    transform=torchvision.transforms.Compose([
                                        torchvision.transforms.ToTensor(),
                                        torchvision.transforms.Normalize(
                                            (0.1307,), (0.3081,))
                                    ])),
-        batch_size=1, shuffle=True)
-    stop = input("will you train")
-    if stop=="y":
-        train_batch = enumerate(train_loader)
-        batch_idx, (train_imgs, train_labels) = next(train_batch)
-        img_shape = np.array(train_imgs).shape
-
-        x = np.array(train_imgs).flatten('C').reshape(img_shape[2]*img_shape[3], -1, order='F')
-        y = np.array([np.array(train_labels).tolist()])
-
-        neuralNet = NeuralNet()
-        neuralNet.load_data_piece(x, y)
-        neuralNet.creat_neural_network()
-        neuralNet.piece_train_network(100, 0.003)
-        neuralNet.show_lose()
-
-        print(neuralNet.A_list[neuralNet.l])
-        print(y)
-
-
+        batch_size=batch_size_test, shuffle=True)
 
 
 if __name__ == '__main__':
-    minist_hand_writing()
+    house_price()
+
 
 
