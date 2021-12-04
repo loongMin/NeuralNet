@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="309c26b2-71d9-4820-a36b-dad3bdd27e6b" name="Default Changelist" comment="ok！">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/objectTracking.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/objectTracking.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DONE&amp;TODO.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/week01/Test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/week01/deepNueralNetwork.py" beforeDir="false" afterPath="$PROJECT_DIR$/week01/NeuralNet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/week02/neuralNet2.py" beforeDir="false" afterPath="$PROJECT_DIR$/week02/deepNeuralNet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdf/dlbook_cn_v0.5-beta.pdf" beforeDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +26,46 @@
     </option>
     <expand />
     <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="-103">
+                <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DONE&amp;TODO.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="570">
+                <caret line="38" selection-start-line="38" selection-end-line="38" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modingRecord.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="487">
+                <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -57,10 +96,11 @@
         <option value="$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py" />
         <option value="$PROJECT_DIR$/week01/test.py" />
         <option value="$PROJECT_DIR$/week02/deepNueralNetwork.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/modingRecord.md" />
         <option value="$PROJECT_DIR$/week02/neuralNet2.py" />
         <option value="$PROJECT_DIR$/week01/deepNueralNetwork.py" />
+        <option value="$PROJECT_DIR$/DONE&amp;TODO.md" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -82,11 +122,6 @@
               <item name="objectTracking" type="b2602c69:ProjectViewProjectNode" />
               <item name="objectTracking" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="objectTracking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="objectTracking" type="462c0819:PsiDirectoryNode" />
-              <item name="md_img" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -101,7 +136,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/week01/NeuralNet.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -116,6 +151,18 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/md_img" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager" selected="Python.test">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -166,6 +213,9 @@
       <module name="objectTracking" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/week01" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -192,7 +242,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -219,6 +269,7 @@
       <workItem from="1638019880215" duration="2818000" />
       <workItem from="1638087663492" duration="6081000" />
       <workItem from="1638180295374" duration="8738000" />
+      <workItem from="1638617690152" duration="2871000" />
     </task>
     <task id="LOCAL-00001" summary="ok！">
       <created>1637503408642</created>
@@ -238,13 +289,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58537000" />
+    <option name="totallyTimeSpent" value="61408000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1680" height="945" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13858365" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23015873" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -278,7 +329,14 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -297,7 +355,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="ok！" />
@@ -469,12 +526,9 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/week02/neuralNet2.py" />
+    <entry file="file://$PROJECT_DIR$/week01/deepNueralNetwork.py" />
     <entry file="file://$PROJECT_DIR$/modingRecord.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="487">
@@ -483,34 +537,29 @@
           <second_editor />
         </state>
       </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
+        </state>
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/DONE&amp;TODO.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="413">
-            <caret line="83" selection-start-line="83" selection-end-line="83" />
+          <first_editor relative-caret-position="570">
+            <caret line="38" selection-start-line="38" selection-end-line="38" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/week02/neuralNet2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/week01/deepNueralNetwork.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2174">
-          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="-103">
+            <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
