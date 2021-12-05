@@ -234,7 +234,6 @@ class NeuralNet:
             lose_itr = self.lose()
             self.lose_list.append(lose_itr.sum()/self.m)
             self.backward(a, lose_itr)
-            print("The ", i, "th propagation!")
 
     def forward(self):
         A_front = np.array(self.A_list[0], dtype=self.np_dtype)
@@ -340,6 +339,55 @@ class NeuralNet:
         self.forward()
         return self.A_list[self.l]
 
+    def save_weights(self):
+        date = time.strftime("%Y-%m-%d %H:%M:%S" + time.localtime())
+
+        G_listF = open('./weights/G_list' + time, 'w')
+        G_listF.write(self.G_list)
+        G_listF.close()
+
+        W_listF = open('./weights/W_list' + time, 'w')
+        W_listF.write(self.A_list)
+        W_listF.close()
+
+        b_listF = open('./weights/b_list' + time, 'w')
+        b_listF.write(self.b_list)
+        b_listF.close()
+
+        b_listF = open('./weights/b_list' + time, 'w')
+        b_listF.write(self.b_list)
+        b_listF.close()
+
+        loseFunctionF = open('./weights/loseFunctionF' + time, 'w')
+        loseFunctionF.write(self.loseFunction)
+        loseFunctionF.close()
+
+        l = open('./weights/l' + time, 'w')
+        l.write(self.l)
+        l.close()
+
+        n_listF = open('./weights/n_list' + time, 'w')
+        n_listF.write(self.n_list)
+        n_listF.close()
+
+
+loseFunction = ""  # lose function type
+y = []  # target y
+
+# hyperparameters
+l = 0  # number of layers
+n_list = []  # number of units in every layer
+
+# train state record
+
+m = 16  # m examples for each batch
+a = 0.03  # learning rate
+itr = 128  # times of iteration
+lose_list = []  # lose of mean in every iteration
+
+
+    def load_weights(self, weights):
+
 def house_price():
     neuralNet = NeuralNet()
     df_x = pd.read_csv("./data/house_price/test.csv")
@@ -375,6 +423,18 @@ def minist_hand_writing():
 
     train_batch = enumerate(train_loader)
     neuralNet = NeuralNet()
+    batch_idx, (train_imgs, train_labels) = next(train_batch)
+    img_shape = np.array(train_imgs).shape
+
+    x = np.array(train_imgs).flatten('C').reshape(img_shape[2] * img_shape[3], -1, order='F')
+    y = np.array([np.array(train_labels).tolist()])
+    softmax_y = np.zeros((10, y.shape[1]))
+    for i in range(0, y.shape[1]):
+        softmax_y[y[0, i], i] = 1
+
+    neuralNet.load_data_piece(x, softmax_y)
+    neuralNet.creat_neural_network()
+
     for i in range(0, 10000):
         batch_idx, (train_imgs, train_labels) = next(train_batch)
         img_shape = np.array(train_imgs).shape
@@ -386,9 +446,7 @@ def minist_hand_writing():
             softmax_y[y[0, i], i] = 1
 
         neuralNet.load_data_piece(x, softmax_y)
-        if i == 0:
-            neuralNet.creat_neural_network()
-        neuralNet.piece_train_network(10, 0.03)
+        neuralNet.piece_train_network(100, 0.03)
         neuralNet.show_lose()
 
     for i in range(0, 128):
