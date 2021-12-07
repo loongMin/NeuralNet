@@ -39,3 +39,5 @@
     
 + week5主题:阅读卷积网络相关论文，看一些现有的目标追踪模型和论文
     主要是目标检测和目标识别方向
+    
+github：https://github.com/loongMin/objectTracking/blob/main/DONE%26TODO.md

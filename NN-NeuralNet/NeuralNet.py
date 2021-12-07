@@ -5,8 +5,8 @@ import pandas as pd
 import torch
 import torchvision
 from PIL import Image
+import json
 import time
-from math import *
 import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 ''' FUNCTIONS
@@ -92,7 +92,9 @@ class NeuralNet:
     m = 16                      # m examples for each batch
     a = 0.03                    # learning rate
     itr = 128                   # times of iteration
-    lose_list = []              # lose of mean in every iteration
+    batch_lose_list = []        # lose of mean in every iteration
+    train_acc = []
+    dev_acc = []
 
     #
     # register the activation function and its derivative to dictionary actGdic
@@ -161,19 +163,22 @@ class NeuralNet:
     def __init__(self):
         self.l = 0
 
-    def load_data_piece(self, A_0, y):
-        self.n_list.append(A_0.shape[0])
-        self.m = A_0.shape[1]
+    def load_data_piece(self, A_0, y=np.array([])):
+        self.A_list[0] = A_0.tolist()
         self.y = y.tolist()
+        self.n_list[0] = A_0.shape[0]
+        self.m = A_0.shape[1]
 
-    def creat_neural_network(self):
+    def creat_neural_network(self, n_0=[], m=0):
         self.G_list.append("")
+        self.A_list.append([])
         self.Z_list.append([])
-        self.A_list.append(self.a_random_array(self.n_list[0], self.m).tolist())
         self.W_list.append([])
         self.b_list.append([])
 
-        #
+        if()
+
+
         pattern_layer = re.compile(r"(relu|leakyRelu|sigmoid|softmax)\s*(\d+)")
         while True:
             str = input("activation(relu, leakyrelu, sigmoid, softmax) with a number of units:")
@@ -183,10 +188,7 @@ class NeuralNet:
                 n_l = int(match.group(2))
                 self.n_list.append(n_l)
                 self.l += 1
-
                 self.G_list.append(match.group(1))
-                self.Z_list.append(self.a_random_array(n_l, self.m))
-                self.A_list.append(self.a_random_array(n_l, self.m))
                 self.W_list.append(self.a_random_array(n_l, self.n_list[self.l - 1], 0.001))
                 self.b_list.append(self.a_random_array(n_l, 1, 0.001))
             else:
@@ -226,16 +228,17 @@ class NeuralNet:
         print("======================================================================")
         print("y:", np.array(self.y).shape)
 
-
     # batch training
     def piece_train_network(self, itr, a):
         for i in range(0, itr):
             self.forward()
             lose_itr = self.lose()
-            self.lose_list.append(lose_itr.sum()/self.m)
+            self.batch_lose_list.append(lose_itr.sum() / self.m)
             self.backward(a, lose_itr)
 
     def forward(self):
+        del self.A_list[1:]
+        del self.Z_list[1:]
         A_front = np.array(self.A_list[0], dtype=self.np_dtype)
         for i in range(1, self.l + 1):
             W = np.array(self.W_list[i], dtype=self.np_dtype)
@@ -246,32 +249,29 @@ class NeuralNet:
 
             # Z forward propagate to A
             A = []
-            if self.G_list[i] == "softmax":         # softmax layer
+            if self.G_list[i] == "softmax":                                 # softmax layer
                 maxZ =  Z.max(axis=0)
                 A = np.array(list(map(self.actiGdic[self.G_list[i]],
                                       Z.flatten('C'),
                                       maxZ.repeat(self.n_list[i]))),
                              dtype=self.np_dtype
                              ).reshape(self.n_list[i], -1)
-            else:                                   # relu, leakyRelu, sigmoid
+            else:                                                           # relu, leakyRelu, sigmoid
                 A = np.array(list(map(self.actiGdic[self.G_list[i]], Z.flatten('C'))),
                              dtype=self.np_dtype
                              ).reshape(self.n_list[i], -1)
 
             # refressh the A and Z with results
-            self.Z_list[i] = Z.tolist()
-            self.A_list[i] = A.tolist()
+            self.Z_list.append(Z.tolist())
+            self.A_list.append(A.tolist())
             A_front = A
 
+            # debug
             if i == self.l and self.debug:
-                print(i, "th training for <softmax layer> ==============================================")
-                print(W)
-                print("Z -----------------------------------------------------------------------")
-                print(Z)
-                print("A -----------------------------------------------------------------------")
-                print(A.sum())
-                print(A.shape)
-                print(A)
+                print("=====================================================================================================================================")
+                print("W:", W.shape, W.min(), W.mean(), W.max(), W.sum())
+                print("Z:", Z.shape, Z.min(), Z.mean(), Z.max(), Z.sum())
+                print("A:", A.shape, A.min(), A.mean(), A.max(), A.sum())
 
     def lose(self):
         y_hat = np.array(self.A_list[self.l], dtype=self.np_dtype)
@@ -324,69 +324,49 @@ class NeuralNet:
             self.b_list[i] = b.tolist()
 
             if self.debug:
-                print(i, "th layer: dW -----------------------------------------------------------------------")
-                print(dW)
+                print("--", i, "th dW -----------------------------------------------------------------------")
+                print("dW:", dW.shape, dW.min(), dW.mean(), dW.max(), dW.sum())
 
-    def show_lose(self):
-        plt.plot(self.lose_list)
-        plt.show()
-
-
+    def show_train_dev_loss(self):
+        plt.plot(range(1, len(self.batch_lose_list)+1), self.batch_lose_list, )
+        plt.plot(range(1, len(self.train_acc)), self.train_acc, '--')
+        plt.plot(range(1, len(self.dev_acc)), self.dev_acc, '-')
 
     # dev Testing
     def detect(self, x):
-        self.A_list[0] = x
+        A_0 = np.zeros(self.n_list[0], self.m)
+        A_0[:, 0] = x.tolist()
+        self.A_list[0] = A_0
         self.forward()
         return self.A_list[self.l]
 
     def save_weights(self):
         date = time.strftime("%Y-%m-%d %H:%M:%S" + time.localtime())
+        with open('./weights/'+date+'.json', 'w') as weights_json_F:
+            weights = {
+                'G_list': self.G_list,
+                'W_list': self.W_list,
+                'b_list': self.b_list,
+                'loseFunction': self.loseFunction,
+                'l': self.l,
+                'n_list': self.n_list,
+            }
+            weights_json = json.dumps(weights)
+            weights_json_F.write(weights_json)
+            weights_json_F.close()
 
-        G_listF = open('./weights/G_list' + time, 'w')
-        G_listF.write(self.G_list)
-        G_listF.close()
+    def load_weights(self, date):
+        with open('./weights/' + date + '.json', 'w') as weights_json_F:
+            weights_json = weights_json_F.read()
+            weights = json.loads(weights_json)
+            self.G_list = weights['G_list']
+            self.W_list = weights['W_list']
+            self.b_list = weights['b_list']
+            self.loseFunction = weights['loseFunction']
+            self.l = weights['l']
+            self.n_list = weights['n_list']
+            weights_json_F.close()
 
-        W_listF = open('./weights/W_list' + time, 'w')
-        W_listF.write(self.A_list)
-        W_listF.close()
-
-        b_listF = open('./weights/b_list' + time, 'w')
-        b_listF.write(self.b_list)
-        b_listF.close()
-
-        b_listF = open('./weights/b_list' + time, 'w')
-        b_listF.write(self.b_list)
-        b_listF.close()
-
-        loseFunctionF = open('./weights/loseFunctionF' + time, 'w')
-        loseFunctionF.write(self.loseFunction)
-        loseFunctionF.close()
-
-        l = open('./weights/l' + time, 'w')
-        l.write(self.l)
-        l.close()
-
-        n_listF = open('./weights/n_list' + time, 'w')
-        n_listF.write(self.n_list)
-        n_listF.close()
-
-
-loseFunction = ""  # lose function type
-y = []  # target y
-
-# hyperparameters
-l = 0  # number of layers
-n_list = []  # number of units in every layer
-
-# train state record
-
-m = 16  # m examples for each batch
-a = 0.03  # learning rate
-itr = 128  # times of iteration
-lose_list = []  # lose of mean in every iteration
-
-
-    def load_weights(self, weights):
 
 def house_price():
     neuralNet = NeuralNet()
@@ -399,8 +379,10 @@ def house_price():
     neuralNet.load_data_piece(x, y)
     neuralNet.creat_neural_network()
     neuralNet.piece_train_network(10, 0.3)
-    neuralNet.show_lose()
+    neuralNet.show_train_dev_loss()
 
+
+    # data
 
 def minist_hand_writing():
     train_loader = torch.utils.data.DataLoader(
@@ -434,6 +416,7 @@ def minist_hand_writing():
 
     neuralNet.load_data_piece(x, softmax_y)
     neuralNet.creat_neural_network()
+    neuralNet.debug = False
 
     for i in range(0, 10000):
         batch_idx, (train_imgs, train_labels) = next(train_batch)
@@ -444,19 +427,34 @@ def minist_hand_writing():
         softmax_y = np.zeros((10, y.shape[1]))
         for i in range(0, y.shape[1]):
             softmax_y[y[0, i], i] = 1
-
         neuralNet.load_data_piece(x, softmax_y)
-        neuralNet.piece_train_network(100, 0.03)
-        neuralNet.show_lose()
+
+        with open("train_controlling.json", 'r') as conF:
+            conStr = conF.read()
+            conJson = json.loads(conStr)
+
+            if conJson["save_weights_itr"] == i:
+                neuralNet.save_weights()
+            if conJson["continue_learning"]:
+                neuralNet.piece_train_network(conJson["batch_itr"], conJson["learning_rate"])
+                neuralNet.show_train_dev_loss()
+            else:
+                break
+            conF.close()
+
 
     for i in range(0, 128):
-        str = input("Test ===============================================")
-        y_hat = np.array(neuralNet.A_list[neuralNet.l][i])
-        print(np.argmax(y_hat)+1)
-        print(y[0][i])
-
-
-
+        cmd = input("========================================================================================")
+        if cmd == "save_weigths":
+            neuralNet.save_weights()
+        elif cmd == "load_weigths":
+            date = input("date")
+            neuralNet.load_weights(date)
+        else:
+            y_hat = np.array(neuralNet.A_list[neuralNet.l][i])
+            print(np.argmax(y_hat)+1)
+            print(y_hat)
+            print(y[0][i])
 
 
 if __name__ == '__main__':
