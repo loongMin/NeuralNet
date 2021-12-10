@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="309c26b2-71d9-4820-a36b-dad3bdd27e6b" name="Default Changelist" comment="ok！">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NN-ConvNet/conNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN-ConvNet/ConvNet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NN-NeuralNet/Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NN-NeuralNet/Test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN-NeuralNet/train_controlling.json" beforeDir="false" afterPath="$PROJECT_DIR$/NN-NeuralNet/train_controlling.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,44 +29,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2138">
-              <caret line="178" selection-start-line="178" selection-end-line="178" />
+            <state relative-caret-position="224">
+              <caret line="484" lean-forward="true" selection-start-line="484" selection-end-line="484" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NN-NeuralNet/train_controlling.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NN-DeepNeuralNet/DeepNeuralNet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="182" column="43" selection-start-line="182" selection-start-column="43" selection-end-line="182" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/NN-ConvNet/ConvNet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -117,6 +87,7 @@
         <option value="$PROJECT_DIR$/NeuralNet/NeuralNet.py" />
         <option value="$PROJECT_DIR$/NN-ConvNet/convNet.py" />
         <option value="$PROJECT_DIR$/NN-ConvNet/ConvNet.py" />
+        <option value="$PROJECT_DIR$/NN-NeuralNet/train_controlling.json" />
         <option value="$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py" />
       </list>
     </option>
@@ -137,13 +108,13 @@
         <subPane>
           <expand>
             <path>
-              <item name="objectTracking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="objectTracking" type="462c0819:PsiDirectoryNode" />
+              <item name="NeuralNet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeuralNet" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="objectTracking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="objectTracking" type="462c0819:PsiDirectoryNode" />
-              <item name="papers" type="462c0819:PsiDirectoryNode" />
+              <item name="NeuralNet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeuralNet" type="462c0819:PsiDirectoryNode" />
+              <item name="NN-NeuralNet" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -198,9 +169,6 @@
       <module name="objectTracking" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NN-NeuralNet" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -327,11 +295,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.deepNueralNetwork" />
-      <item itemvalue="Python.anaconda" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.T" />
       <item itemvalue="Python.NeuralNet" />
+      <item itemvalue="Python.T" />
+      <item itemvalue="Python.anaconda" />
+      <item itemvalue="Python.deepNueralNetwork" />
+      <item itemvalue="Python.test" />
     </list>
     <recent_temporary>
       <list>
@@ -377,6 +345,8 @@
       <workItem from="1638713210456" duration="23442000" />
       <workItem from="1638949053903" duration="3038000" />
       <workItem from="1639129034433" duration="358000" />
+      <workItem from="1639131171981" duration="302000" />
+      <workItem from="1639136048235" duration="7971000" />
     </task>
     <task id="LOCAL-00001" summary="ok！">
       <created>1637503408642</created>
@@ -396,12 +366,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="109473000" />
+    <option name="totallyTimeSpent" value="117746000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1680" height="945" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23809524" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24114774" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -415,7 +386,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.25029516" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3293979" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50183153" side_tool="true" weight="0.33293977" />
-      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.4981685" weight="0.32821724" />
+      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.4981685" visible="true" weight="0.27863047" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -494,13 +465,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py</url>
-          <line>229</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -513,6 +477,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/objectTracking$NeuralNet.coverage" NAME="NeuralNet Coverage Results" MODIFIED="1638951260080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NN-NeuralNet" />
     <SUITE FILE_PATH="coverage/objectTracking$anaconda.coverage" NAME="anaconda Coverage Results" MODIFIED="1638666873289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/week01" />
+    <SUITE FILE_PATH="coverage/NeuralNet$NeuralNet.coverage" NAME="NeuralNet Coverage Results" MODIFIED="1639141937748" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NN-NeuralNet" />
     <SUITE FILE_PATH="coverage/objectTracking$T.coverage" NAME="T Coverage Results" MODIFIED="1638852397522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="debuggerHistoryManager">
@@ -632,13 +597,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.conda/envs/week01/lib/python3.7/site-packages/numpy/core/_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/md_img/minist-nn-paper.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -677,13 +635,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/week02/test.py" />
-    <entry file="file://$USER_HOME$/.conda/envs/week01/lib/python3.7/site-packages/matplotlib/axes/_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="497" selection-start-line="497" selection-end-line="497" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DONE&amp;TODO.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -703,16 +654,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2138">
-          <caret line="178" selection-start-line="178" selection-end-line="178" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -720,16 +661,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NN-NeuralNet/train_controlling.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NN-DeepNeuralNet/DeepNeuralNet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
+        <state relative-caret-position="2685">
           <caret line="182" column="43" selection-start-line="182" selection-start-column="43" selection-end-line="182" selection-end-column="43" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -739,8 +673,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NN-ConvNet/ConvNet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        <state>
+          <caret column="3" selection-start-column="3" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_bundle/pydev_stdin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.conda/envs/week01/lib/python3.7/site-packages/matplotlib/axes/_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="497" selection-start-line="497" selection-end-line="497" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.conda/envs/week01/lib/python3.7/site-packages/numpy/core/_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NN-NeuralNet/train_controlling.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="484" lean-forward="true" selection-start-line="484" selection-end-line="484" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

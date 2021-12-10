@@ -164,18 +164,30 @@ class NeuralNet:
         self.l = 0
 
     def load_data_piece(self, A_0, y=np.array([])):
-        self.A_list[0] = A_0.tolist()
+        if len(self.A_list) == 0:
+            self.A_list.append(A_0)
+            self.n_list.append(A_0.shape[0])
+        else:
+            self.A_list[0] = A_0.tolist()
+            self.n_list[0] = A_0.shape[0]
         self.y = y.tolist()
-        self.n_list[0] = A_0.shape[0]
         self.m = A_0.shape[1]
 
-    def creat_neural_network(self, n_0=[], m=0):
+    def creat_neural_network(self, n_x=0, m=0):
+        """
+        if you give the m_x and m of input layer, the net will begin with it, so the X's shape must satisfy your givens
+        :param n_x:
+        :param m:
+        :return:
+        """
         self.G_list.append("")
-        self.A_list.append([])
+        if len(self.n_list) == 0:
+            self.A_list.append(np.zeros((n_x, m), dtype=self.np_dtype).tolist())
+            self.n_list.append(n_x)
+            self.m = m
         self.Z_list.append([])
         self.W_list.append([])
         self.b_list.append([])
-
         pattern_layer = re.compile(r"(relu|leakyRelu|sigmoid|softmax)\s*(\d+)")
         while True:
             str = input("activation(relu, leakyrelu, sigmoid, softmax) with a number of units:")
@@ -253,7 +265,7 @@ class NeuralNet:
                                       maxZ.repeat(self.n_list[i]))),
                              dtype=self.np_dtype
                              ).reshape(self.n_list[i], -1)
-            else:                                                           # relu, leakyRelu, sigmoid
+            else:                                                           # relu, leakyRelu, sigmoid, tanh
                 A = np.array(list(map(self.actiGdic[self.G_list[i]], Z.flatten('C'))),
                              dtype=self.np_dtype
                              ).reshape(self.n_list[i], -1)
@@ -324,15 +336,41 @@ class NeuralNet:
                 print("--", i, "th dW -----------------------------------------------------------------------")
                 print("dW:", dW.shape, dW.min(), dW.mean(), dW.max(), dW.sum())
 
+
+
+
+
+    #
+
+
+
+    def record_train_acc_softmax(self):
+        y_hat = np.array(self.A_list[self.l])
+        y = np.array(self.y)
+        y_predict = y_hat.argmax(axis=0)
+        self.train_acc.append((y == y_predict).sum()/y.shape[1])
+        return
+
     def show_train_dev_loss(self):
         plt.plot(range(1, len(self.batch_lose_list)+1), self.batch_lose_list, )
-        plt.plot(range(1, len(self.train_acc)), self.train_acc, '--')
-        plt.plot(range(1, len(self.dev_acc)), self.dev_acc, '-')
+        plt.show()
+
+    def show_acc(self):
+        plt.plot(range(1, len(self.train_acc)+1), self.train_acc, '-')
+        # plt.plot(range(1, len(self.dev_acc)), self.dev_acc, '-')
+        plt.show()
+
+
+
+
+
+
+
 
     # dev Testing
     def detect(self, x):
-        A_0 = np.zeros(self.n_list[0], self.m)
-        A_0[:, 0] = x.tolist()
+        A_0 = np.zeros((self.n_list[0], self.m), dtype=self.np_dtype)
+        A_0[:, 0] = x[:, 0]
         self.A_list[0] = A_0
         self.forward()
         return self.A_list[self.l]
@@ -400,20 +438,10 @@ def minist_hand_writing():
 
     train_batch = enumerate(train_loader)
     neuralNet = NeuralNet()
-    batch_idx, (train_imgs, train_labels) = next(train_batch)
-    img_shape = np.array(train_imgs).shape
+    neuralNet.creat_neural_network(28*28, 128)
+    neuralNet.debug = True
 
-    x = np.array(train_imgs).flatten('C').reshape(img_shape[2] * img_shape[3], -1, order='F')
-    y = np.array([np.array(train_labels).tolist()])
-    softmax_y = np.zeros((10, y.shape[1]))
-    for i in range(0, y.shape[1]):
-        softmax_y[y[0, i], i] = 1
-
-    neuralNet.load_data_piece(x, softmax_y)
-    neuralNet.creat_neural_network()
-    neuralNet.debug = False
-
-    for i in range(0, 10000):
+    for i in range(0, 100):
         batch_idx, (train_imgs, train_labels) = next(train_batch)
         img_shape = np.array(train_imgs).shape
 
@@ -430,15 +458,19 @@ def minist_hand_writing():
 
             if conJson["save_weights_itr"] == i:
                 neuralNet.save_weights()
-            if conJson["continue_learning"]:
+            if conJson["continue_learning"] == 1:
                 neuralNet.piece_train_network(conJson["batch_itr"], conJson["learning_rate"])
-                neuralNet.show_train_dev_loss()
+                neuralNet.record_train_acc_softmax()
+
             else:
                 break
             conF.close()
 
+    neuralNet.show_train_dev_loss()
+    neuralNet.show_acc()
 
-    for i in range(0, 128):
+
+    for i in range(0, 64):
         cmd = input("========================================================================================")
         if cmd == "save_weigths":
             neuralNet.save_weights()
@@ -446,13 +478,40 @@ def minist_hand_writing():
             date = input("date")
             neuralNet.load_weights(date)
         else:
+            y = np.array(neuralNet.y)
             y_hat = np.array(neuralNet.A_list[neuralNet.l][i])
-            print(np.argmax(y_hat)+1)
-            print(y_hat)
-            print(y[0][i])
+            print(y.argmax(axis=0))
+            print(y_hat.argmax(axis=0))
+
+
+def test():
+    x = np.array(
+        [
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        ]
+    )
+    y = np.array(
+        [
+            [0.06, 0.12, 0.18, 0.24, 0.30, 0.36, 0.42, 0.48, 0.54]
+        ]
+    )
+
+    neuralNet = NeuralNet()
+    neuralNet.load_data_piece(x, y)
+    neuralNet.creat_neural_network()
+    neuralNet.piece_train_network(100000, 0.03)
+    neuralNet.show_train_dev_loss()
+
+    print(neuralNet.detect(x))
+
 
 
 if __name__ == '__main__':
-    minist_hand_writing()
+    test()
 
 

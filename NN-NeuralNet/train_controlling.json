@@ -1,6 +1,6 @@
 {
   "learning_rate": 0.1,
-  "batch_itr": 1000,
-  "continue_learning": "False",
-  "save_weights_itr": 0
+  "batch_itr": 10,
+  "continue_learning": 1,
+  "save_weights_itr": -1
 }
