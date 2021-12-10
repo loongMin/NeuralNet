@@ -176,9 +176,6 @@ class NeuralNet:
         self.W_list.append([])
         self.b_list.append([])
 
-        if()
-
-
         pattern_layer = re.compile(r"(relu|leakyRelu|sigmoid|softmax)\s*(\d+)")
         while True:
             str = input("activation(relu, leakyrelu, sigmoid, softmax) with a number of units:")
@@ -381,8 +378,6 @@ def house_price():
     neuralNet.piece_train_network(10, 0.3)
     neuralNet.show_train_dev_loss()
 
-
-    # data
 
 def minist_hand_writing():
     train_loader = torch.utils.data.DataLoader(
