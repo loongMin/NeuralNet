@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/objectTracking.iml" filepath="$PROJECT_DIR$/.idea/objectTracking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NeuralNet.iml" filepath="$PROJECT_DIR$/.idea/NeuralNet.iml" />
     </modules>
   </component>
 </project>

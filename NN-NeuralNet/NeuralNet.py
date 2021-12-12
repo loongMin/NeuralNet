@@ -40,8 +40,8 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
     regression
         L(a, y) = EMS(a, y) = (a-y)^2
         L'(a) = 2|a-y|
-
 '''
+
 
 ''' PARAMETERS DEFINATION
 #layer model:
@@ -510,8 +510,5 @@ def test():
     print(neuralNet.detect(x))
 
 
-
 if __name__ == '__main__':
     test()
-
-
