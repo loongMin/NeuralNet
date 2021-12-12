@@ -28,8 +28,8 @@
     ![](./md_img/minist-nn-paper.png)
     4. 使用卷积网络模型做minist-handwriting-digits数据集，尝试多种方法和参数。并阅读此数据集上[全链接网络的论文](http://yann.lecun.com/exdb/mnist/)学习他人的参数和背后的思想
     ![](./md_img/minist_convolutional_nets.png)
-    
-### PLANE:
+       
+### week4 DONE:
 + week4主题:巩固和实践
     1. 学习吴恩达课程《序列模型》
     2. 继续看minist-handwriting-digits数据集上的论文和模型，FC+COV，实践！实践！实践！
@@ -37,7 +37,16 @@
         COV: minist-handwriting dataset
     3. 阅读完《deep learning》
     
+### PLANE:
 + week5主题:阅读卷积网络相关论文，看一些现有的目标追踪模型和论文
-    主要是目标检测和目标识别方向
-    
+    papers:
+        1. You only look once
+        2. vgg-16
+        3. FaceNet: A Unified Embedding for Face Recognition and Clustering
+        4. DeepFace: Closing the Gap to Human-Level Performance in Face Verification
+        5. 
+    modeling:
+  
 github：https://github.com/loongMin/objectTracking/blob/main/DONE%26TODO.md
+  
++ week6主题:

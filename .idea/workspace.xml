@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9d405ea-3cf2-4968-af0c-24944908cfbc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/objectTracking.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN-NeuralNet/NeuralNet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DONE&amp;TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/DONE&amp;TODO.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +106,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639310465786</updated>
-      <workItem from="1639310468500" duration="950000" />
+      <workItem from="1639310468500" duration="3585000" />
     </task>
     <servers />
   </component>
