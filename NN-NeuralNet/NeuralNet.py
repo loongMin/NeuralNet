@@ -445,7 +445,7 @@ def minist_hand_writing():
         batch_idx, (train_imgs, train_labels) = next(train_batch)
         img_shape = np.array(train_imgs).shape
 
-        x = np.array(train_imgs).flatten('C').reshape(img_shape[2]*img_shape[3], -1, order='F')
+        x = np.array(train_imgs).flatten('C').reshape(img_shape[2]*img_shape[3], -1, order='C')
         y = np.array([np.array(train_labels).tolist()])
         softmax_y = np.zeros((10, y.shape[1]))
         for i in range(0, y.shape[1]):

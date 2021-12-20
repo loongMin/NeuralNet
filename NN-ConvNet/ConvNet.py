@@ -37,6 +37,8 @@ import pandas as pd
 import torch
 import torchvision
 from PIL import Image
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 train_loader = torch.utils.data.DataLoader(
         torchvision.datasets.MNIST('./../data/', train=True, download=False,
@@ -46,14 +48,19 @@ train_loader = torch.utils.data.DataLoader(
                                            (0.1307,), (0.3081,))
                                    ])),
         batch_size=128, shuffle=True)
+
+
 def getXY():
     train_batch = enumerate(train_loader)
     batch_idx, (train_imgs, train_labels) = next(train_batch)
     return np.array(train_imgs), np.array(train_labels)
 
+
 def get_W_b(n_c, n_c_pre, f_h, f_w):
     W = np.random.rand(n_c, n_c_pre, f_h, f_w)
+    W = W / W.sum()
     b = np.random.rand(n_c, 1, 1, 1)
+    b = b / b.sum()
     return W, b
 
 
@@ -71,13 +78,14 @@ def relu_(Z, dA):
 
 softmax_layer_sum = 0
 def softmax(Z):
-    Z = Z - Z.max()
+    Z = Z - Z.mean()
     A = np.exp(Z)
     softmax_layer_sum = A.sum()
-    return A
+    return A/softmax_layer_sum
 
 
 def softmax_(Z):
+    Z = Z - Z.mean()
     ex = np.exp(Z)
     return ex*(softmax_layer_sum-ex)/softmax_layer_sum**2
 
@@ -88,7 +96,7 @@ def cross_lose(A, y):
 
 
 def cross_lose_(A, y):
-    return -1/A*y
+    return (-1/A)*y
 
 
 def get_W_b(n_c, n_c_pre, f_h, f_w):
@@ -106,7 +114,7 @@ def get_mask(slice, mode):
     return mask
 
 
-def conv_forward(A_prev, W, b, stride, pad, mode="conv"):
+def conv_forward(A_prev, W, b, pad, stride, mode="conv"):
     """
     Implements the forward propagation for a convolution function
 
@@ -127,11 +135,9 @@ def conv_forward(A_prev, W, b, stride, pad, mode="conv"):
     (m, n_C_prev, n_H_prev, n_W_prev) = A_prev.shape
     (n_C, n_C_prev, f, f) = W.shape
 
-    if n_C == 0:
-        a =input("n_cPrev is wrong!")
     # create container Z and padded A_prev
-    n_H = int(np.floor((n_H_prev + 2 * pad - f) / stride + 1))
-    n_W = int(np.floor((n_W_prev + 2 * pad - f) / stride + 1))
+    n_H = (n_H_prev + 2 * pad - f) // stride + 1
+    n_W = (n_W_prev + 2 * pad - f) // stride + 1
     Z = np.zeros((m, n_C, n_H, n_W))
     A = np.zeros((m, n_C, n_H, n_W))
     A_prev = np.pad(A_prev, ((0, 0), (0, 0), (pad, pad), (pad, pad)), mode='constant', constant_values=(0))
@@ -173,9 +179,7 @@ def conv_backward(dA, Z, W, b, A_prev, stride, pad, mode):
         for j in range(0, n_C):
             for k in range(0, n_H):
                 for l in range(0, n_W):
-                    assert (k * stride + f - 1 < n_H_prev + 2 * pad and l * stride + f - 1 <= n_W_prev + 2 * pad)
                     A_pre_slice = A_prev[i, :, k * stride:k * stride + f, l * stride:l * stride + f]
-                    dW, db, dA_prev = [], [], []
                     if mode == "conv":
                         dW[j] += dZ[i, j, k, l] * A_pre_slice
                         db[j] += dZ[i, j, k, l]
@@ -193,13 +197,13 @@ def fc_forward(A_prev, W, b, g):
     return Z, A
 
 
-def fc_backward(A_prev, Z, g_, dA):
-    m, n_l, n_l_prev = Z.shape
+def fc_backward(A_prev, W, g_, Z, dA):
+    n_l, m = Z.shape
 
     dZ = g_(Z) * dA
     dW = np.dot(dZ, A_prev.T) / m
-    db = dA.sum(axis=1, keepdim=True) / m
-    dA_prev = np.dot(dW.T, dZ)
+    db = dA.sum(axis=1, keepdims=True) / m
+    dA_prev = np.dot(W.T, dZ)
 
     return dW, db, dA_prev
 
@@ -214,45 +218,50 @@ def train(batchs, itrs, learning_rate):
     (A4, Z4, pad4, stride4, mode4, (W4, b4)) = ([], [], 0, 2, "conv", get_W_b(16, 16, 3, 3))
     (A5, Z5, pad5, stride5, mode5, (W5, b5)) = ([], [], 0, 1, "conv", get_W_b(32, 16, 3, 3))
     W6 = np.random.rand(16, 32)
-    b6 = np.random.rand(16)
+    b6 = np.random.rand(16, 1)
     W7 = np.random.rand(10, 16)
-    b7 = np.random.rand(10)
+    b7 = np.random.rand(10, 1)
 
     for i in range(0, batchs):
-        A0, y = getXY()
+        A0, labels = getXY()
+        y = np.array([np.array(labels).tolist()])
+        softmax_y = np.zeros((10, y.shape[1]))
+        for i in range(0, y.shape[1]):
+            softmax_y[y[0, i], i] = 1
+
         for itr in range(0, itrs):
             print(itr, "================================================================================")
-        # forward propagation
+        # forward propagation   conv_forward(A_prev, W, b, pad, stride, mode="conv")
             # conv
-            Z1, A1 = conv_forward(A0, W1, b1, 1, 1, "conv")
-            Z2, A2 = conv_forward(A1, W2, b2, 1, 2, "conv")
-            Z3, A3 = conv_forward(A2, W3, b3, 1, 2, "max")
-            Z4, A4 = conv_forward(A3, W4, b4, 1, 2, "conv")
-            Z5, A5 = conv_forward(A4, W5, b5, 1, 1, "conv")
+            Z1, A1 = conv_forward(A0, W1, b1, pad1, stride1, "conv")
+            Z2, A2 = conv_forward(A1, W2, b2, pad2, stride2, "conv")
+            Z3, A3 = conv_forward(A2, W3, b3, pad3, stride3, "max")
+            Z4, A4 = conv_forward(A3, W4, b4, pad4, stride4, "conv")
+            Z5, A5 = conv_forward(A4, W5, b5, pad5, stride5, "conv")
 
-        # conv to fc
+            # conv to fc
             m, A5_c, A5_h, A5_w = A5.shape
-            A5_ = A5.flatten('C')
-            A5_ = A5_.reshape((m, -1), order='C').T
+            A5_ = A5.flatten('C').reshape((m, -1), order='C').T
 
             # fc
             Z6, A6 = fc_forward(A5_, W6, b6, relu)
             Z7, A7 = fc_forward(A6, W7, b7, softmax)
 
-            # lose
-            l = cross_lose(A7, y)
+        # lose
+            l = cross_lose(A7, softmax_y)
             los.append(l)
+            print(l)
 
         # backward propagation
-            # fc
-            dA7 = l * cross_lose_(A7, y)
-            dW7, db7, dA6 = fc_backward(A6, Z7, softmax, dA7)
-            dW6, db6, dA5_ = fc_backward(A5, Z6, relu, dA6)
+            # fc fc_backward(A_prev, W, g_, Z, dA):
+            dA7 = l * cross_lose_(A7, softmax_y)
+            dW7, db7, dA6 = fc_backward(A6, W7, softmax, Z7, dA7)
+            dW6, db6, dA5_ = fc_backward(A5_, W6, relu, Z6, dA6)
 
             # fc to conv
             dA5 = dA5_.reshape(A5.shape, order='C')
 
-            # conv
+            # conv conv_backward(dA, Z, W, b, A_prev, stride, pad, mode)
             dW5, db5, dA4 = conv_backward(dA5, Z5, W5, b5, A4, stride5, pad5, mode="conv")
             dW4, db4, dA3 = conv_backward(dA4, Z4, W4, b4, A3, stride4, pad4, mode="conv")
             dW3, db3, dA2 = conv_backward(dA3, Z3, W3, b3, A2, stride3, pad3, mode="max")
@@ -281,8 +290,6 @@ def train(batchs, itrs, learning_rate):
 
 if __name__ == '__main__':
     train(1, 100, 0.01)
-
-
 
 
 def test():
