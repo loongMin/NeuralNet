@@ -53,7 +53,10 @@ train_loader = torch.utils.data.DataLoader(
 def getXY():
     train_batch = enumerate(train_loader)
     batch_idx, (train_imgs, train_labels) = next(train_batch)
-    return np.array(train_imgs), np.array(train_labels)
+    imgs = np.array(train_imgs)
+    imgs = imgs / imgs.sum()
+    labels = np.array(train_labels)
+    return imgs, labels
 
 
 def get_W_b(n_c, n_c_pre, f_h, f_w):
@@ -92,16 +95,18 @@ def softmax_(Z):
 
 def cross_lose(A, y):
     assert(A.shape == y.shape)
-    return -y*np.log(A)
+    return -y*np.log(A + np.exp(-8))
 
 
 def cross_lose_(A, y):
-    return (-1/A)*y
+    return (-1/(A + np.exp(-8)))*y
 
 
 def get_W_b(n_c, n_c_pre, f_h, f_w):
     W = np.random.rand(n_c, n_c_pre, f_h, f_w)
+    W = W / W.sum()
     b = np.random.rand(n_c, 1, 1, 1)
+    b = b / b.sum()
     return W, b
 
 
@@ -217,9 +222,9 @@ def train(batchs, itrs, learning_rate):
     (A3, Z3, pad3, stride3, mode3, (W3, b3)) = ([], [], 1, 2, "max", get_W_b(16, 16, 3, 3))
     (A4, Z4, pad4, stride4, mode4, (W4, b4)) = ([], [], 0, 2, "conv", get_W_b(16, 16, 3, 3))
     (A5, Z5, pad5, stride5, mode5, (W5, b5)) = ([], [], 0, 1, "conv", get_W_b(32, 16, 3, 3))
-    W6 = np.random.rand(16, 32)
+    W6 = np.random.rand(16, 32) * 0.001
     b6 = np.random.rand(16, 1)
-    W7 = np.random.rand(10, 16)
+    W7 = np.random.rand(10, 16) * 0.001
     b7 = np.random.rand(10, 1)
 
     for i in range(0, batchs):
@@ -248,9 +253,10 @@ def train(batchs, itrs, learning_rate):
             Z7, A7 = fc_forward(A6, W7, b7, softmax)
 
         # lose
+            print(A7)
             l = cross_lose(A7, softmax_y)
             los.append(l)
-            print(l)
+
 
         # backward propagation
             # fc fc_backward(A_prev, W, g_, Z, dA):
