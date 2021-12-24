@@ -83,12 +83,11 @@ class NeuralNet:
     loseFunction = ""           # lose function type
     y = []                      # target y
 
-    # hyperparameters
+    # net structure
     l = 0                       # number of layers
     n_list = []                 # number of units in every layer
 
-    # train state record
-
+    # train and state record
     m = 16                      # m examples for each batch
     a = 0.03                    # learning rate
     itr = 128                   # times of iteration
@@ -96,7 +95,6 @@ class NeuralNet:
     train_acc = []
     dev_acc = []
 
-    #
     # register the activation function and its derivative to dictionary actGdic
     def sigmoid(z):
         return 1 / (1 + np.exp(-z))
@@ -335,14 +333,7 @@ class NeuralNet:
             if self.debug:
                 print("--", i, "th dW -----------------------------------------------------------------------")
                 print("dW:", dW.shape, dW.min(), dW.mean(), dW.max(), dW.sum())
-
-
-
-
-
     #
-
-
 
     def record_train_acc_softmax(self):
         y_hat = np.array(self.A_list[self.l])
@@ -360,14 +351,6 @@ class NeuralNet:
         # plt.plot(range(1, len(self.dev_acc)), self.dev_acc, '-')
         plt.show()
 
-
-
-
-
-
-
-
-    # dev Testing
     def detect(self, x):
         A_0 = np.zeros((self.n_list[0], self.m), dtype=self.np_dtype)
         A_0[:, 0] = x[:, 0]
@@ -511,4 +494,4 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    minist_hand_writing()
