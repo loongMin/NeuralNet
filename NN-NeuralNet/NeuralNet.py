@@ -96,14 +96,14 @@ class NeuralNet:
     dev_acc = []
 
     # register the activation function and its derivative to dictionary actGdic
-    def sigmoid(z):
-        return 1 / (1 + np.exp(-z))
+    def sigmoid(Z):
+        return 1 / (1 + np.exp(-Z))
 
-    def sigmoid_(z):
-        a = 1 / (1 + np.exp(-z))
+    def sigmoid_(Z):
+        a = 1 / (1 + np.exp(-Z))
         return a*(1-a)
 
-    def relu(z):
+    def relu(Z):
         return max(0, z)
 
     def relu_(z):
@@ -122,14 +122,7 @@ class NeuralNet:
         ex = np.exp(z)
         return ex * (sumA - ex) / (sumA ** 2)
 
-    actiGdic = {"sigmoid": sigmoid,
-                "sigmoid_": sigmoid_,
-                "relu": relu,
-                "relu_": relu_,
-                "leakyRelu": leakyRelu,
-                "leakyRelu_": leakyRelu_,
-                "softmax": softmax,
-                "softmax_": softmax_}
+
 
     # register lose function and its derivative to dictionary loseLdic
     def L_binaryClassfication(a, y):
@@ -150,17 +143,6 @@ class NeuralNet:
     def L_cross_entropy_(a, y):
         return -y/(a + 0.1**8)
 
-    loseLdic = {"L_b": L_binaryClassfication,
-                "L_b_": L_binaryClassfication_,
-                "L_r": L_regression,
-                "L_r_": L_regression_,
-                "L_c": L_cross_entropy,
-                "L_c_": L_cross_entropy_}
-
-    #
-    def __init__(self):
-        self.l = 0
-
     def load_data_piece(self, A_0, y=np.array([])):
         if len(self.A_list) == 0:
             self.A_list.append(A_0)
@@ -178,7 +160,7 @@ class NeuralNet:
         :param m:
         :return:
         """
-        self.G_list.append("")
+        self.G_list.append([])
         if len(self.n_list) == 0:
             self.A_list.append(np.zeros((n_x, m), dtype=self.np_dtype).tolist())
             self.n_list.append(n_x)
