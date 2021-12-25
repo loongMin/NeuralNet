@@ -257,7 +257,7 @@ class NeuralNet:
 
             # debug
             if i == self.l and self.debug:
-                print("=====================================================================================================================================")
+                print("=======================================================================")
                 print("W:", W.shape, W.min(), W.mean(), W.max(), W.sum())
                 print("Z:", Z.shape, Z.min(), Z.mean(), Z.max(), Z.sum())
                 print("A:", A.shape, A.min(), A.mean(), A.max(), A.sum())
