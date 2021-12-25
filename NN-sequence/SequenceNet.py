@@ -4,43 +4,23 @@ one hot encoding: https://blog.csdn.net/dulingtingzi/article/details/51374487
 <<<<<<< HEAD
 '''
 
-if __name__ == '__main__':
-    print("龙".encode().decode('utf-8'))
-
-def sigmoid(Z):
-    return Z
-
-def sigmoid_(Z):
-    return Z
-=======
-
-
-'''
-
-
 import numpy as np
 import pandas as pd
-
-
-
 
 def relu(Z):
     A = Z.copy()
     A[A < 0] = 0
     return A
 
-
 def relu_(Z, dA):
     dZ = dA.copy()
     dZ[Z<0] = 0
     return dZ
 
->>>>>>> 4b1aef08d776d500b5c9fa7ed9d606ec0cd8f6ea
-
 def tanh(Z):
     return Z
 
-<<<<<<< HEAD
+
 def tanh_(Z):
     return Z
 
@@ -49,7 +29,7 @@ def softmax(Z):
 
 def softmax_(Z):
     return Z
-=======
+
 
 def tanh_(Z):
     return Z
@@ -69,7 +49,6 @@ def softmax_(Z):
     return ex*(softmax_layer_sum-ex)/softmax_layer_sum**2
 
 
->>>>>>> 4b1aef08d776d500b5c9fa7ed9d606ec0cd8f6ea
 
 def gru_forward(C_pre, x, Wr, br, Wc, bc, Wu, bu):
     r_Z = Wr.dot([C_pre, x]) + br
@@ -86,10 +65,6 @@ def gru_forward(C_pre, x, Wr, br, Wc, bc, Wu, bu):
 
     return r_Z, r, C_hat_Z, C_hat, u_Z, u, C, y
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4b1aef08d776d500b5c9fa7ed9d606ec0cd8f6ea
 def gru_backward(dy, dC, C_pre, x, Wr, Wc, Wu, r_Z, r, C_hat_Z, C_hat, u_Z, u, C, y):
     dC_Z = dy * softmax_(C, y) + dC
     du = (C_hat - C_pre) * dC_Z
@@ -117,11 +92,6 @@ def gru_backward(dy, dC, C_pre, x, Wr, Wc, Wu, r_Z, r, C_hat_Z, C_hat, u_Z, u, C
 
 
 
-<<<<<<< HEAD
-def train( )
-=======
-
-
 def get_balance_corpus():
     pd_all = pd.read_csv("./../data/ChnSentiCrop_htl/ChnSentiCorp_htl_all.csv")
     corpus_pos = pd_all[pd_all.label == 1]
@@ -145,5 +115,3 @@ if __name__ == '__main__':
     train(100, 0.01)
 
 
-
->>>>>>> 4b1aef08d776d500b5c9fa7ed9d606ec0cd8f6ea

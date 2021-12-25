@@ -1,371 +1,193 @@
-import re
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import torch
 import torchvision
 from PIL import Image
-import json
-import time
 import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
-''' FUNCTIONS
-#Activation function:
-    ReLu
-        forward: g(z) = max(0, z)
-        backward: g'(z) = int(z>=0)
-        
-    leaky Relu
-        forward: g(z) = max(0.01z, z)
-        backward: g'(z) = max(int(z>=0), 0.01)
-        
-    sigmoid
-        forward: a = g(z) = 1/(1+e^(-z));
-        backward: g'(z) = a(1-a)
-    
-    softmax
-        define sumA as sum of softmax layer in output A， maxZ as max of softmax layer in input Z
-        forward: a = g(z) = (1/e^(z-maxZ))/sum
-        backward: g'(z) = -(sum-e^t)*e^t / sum^2
-        
-#lose function 
-    binary-classification
-        L(a, y) = - (y·ln(a) + (1-y)ln·(1-a))
-        L'(a) = - (y/a + (1-y)/(1-a))
-    
-    multiple-classification: softmax
-        L(a, y) = Epsilon{-y*log(a)}
-        L'(a, y) = {0, y=0; 1/a, y=1}
-        
-    regression
-        L(a, y) = EMS(a, y) = (a-y)^2
-        L'(a) = 2|a-y|
-'''
+
+def sigmoid(Z):
+    return 1. / (1. + np.exp(-Z))
+
+def sigmoid_(Z):
+    A = 1. / (1. + np.exp(-Z))
+    return A*(1.-A)
+
+def relu(Z):
+    Z[Z<0] = 0.
+    return Z
+
+def relu_(Z):
+    Z[Z>=0] = 1.
+    Z[Z<0] = 0.
+    return Z
+
+def leakyRelu(Z):
+    Z[Z<0] = 0.01 * Z[Z<0]
+    return Z
+
+def leakyRelu_(Z):
+    Z[Z>=0] = 1.
+    Z[Z<0] = 0.01
+    return Z
+
+def softmax(Z):
+    A = np.exp(Z-Z.mean(axis=0, keepdims=True))
+    softmax_sum = A.sum(axis=0, keepdims=True)
+    return A / softmax_sum
+
+def softmax_(Z):
+    A = np.exp(Z-Z.mean())
+    softmax_sum = A.sum(axis=0, keepdims=True)
+    return A * (softmax_sum - A) / (softmax_sum ** 2)
+
+def L_binaryClassfication(A, Y):
+    return -(Y * np.log(A) + (1 - Y) * np.log(1 - A))
+
+def L_binaryClassfication_(A, Y):
+    return -(Y / (A + 0.1**8) + (1 - Y) / (1 - A + 0.1**8))
+
+def L_cross_entropy(A, Y):
+    return -Y*np.log(A + 0.1**8)
+
+def L_cross_entropy_(A, Y):
+    return -Y/(A + 0.1**8)
 
 
-''' PARAMETERS DEFINATION
-#layer model:
-    forward:
-        Z = W · A_1 + b
-        A = g(Z)
-    backward:
-        dZ = dA * f'(Z)
-        dW = dZ · A_1.T
-        db = np.sum(dZ, axis=1, keepdim =true) 
-        dA_1 = W.T · dZ
-    
-    
-    parameters:
-        W, b Z A
-    
-    hyper parameters:
-        #learning rate: a
-        #activacation: g
-        #number of examples: m
-        #units: n, nx = n_0
-        #number of layer: l
-        #lose function: L
-'''
+def forward(A_prev, W, b, g):
+    Z = W.dot(A_prev) + b
+    A= g(Z)
+    return Z, A
 
 
-class NeuralNet:
-    # compiling parameters
-    np_dtype = 'float64'
-    debug = False
-
-    # parameters
-    G_list = []
-    A_list = []
-    Z_list = []
-    W_list = []
-    b_list = []
-
-    loseFunction = ""           # lose function type
-    y = []                      # target y
-
-    # net structure
-    l = 0                       # number of layers
-    n_list = []                 # number of units in every layer
-
-    # train and state record
-    m = 16                      # m examples for each batch
-    a = 0.03                    # learning rate
-    itr = 128                   # times of iteration
-    batch_lose_list = []        # lose of mean in every iteration
-    train_acc = []
-    dev_acc = []
-
-    # register the activation function and its derivative to dictionary actGdic
-    def sigmoid(Z):
-        return 1 / (1 + np.exp(-Z))
-
-    def sigmoid_(Z):
-        a = 1 / (1 + np.exp(-Z))
-        return a*(1-a)
-
-    def relu(Z):
-        return max(0, z)
-
-    def relu_(z):
-        return int(z >= 0)
-
-    def leakyRelu(z):
-        return max(0.01 * z, z)
-
-    def leakyRelu_(z):
-        return max(0.01, int(z >= 0))
-
-    def softmax(z, maxZ):
-        return np.exp(z-maxZ)
-
-    def softmax_(z, sumA):
-        ex = np.exp(z)
-        return ex * (sumA - ex) / (sumA ** 2)
+def backward(A_prev, W, Z, g_, dA):
+    dZ = dA * g_(Z)
+    dW = dA.dot(A_prev.T) / Z.shape[1]
+    db = dA.sum(axis=1, keepdims=True) / Z.shape[1]
+    dA_prev = W.T.dot(dA)
+    return dA_prev, dW, db, dZ
 
 
+def get_pars(n_pre, n):
+    W = np.random.rand(n, n_pre)
+    W = W / W.sum()
+    b = np.random.rand(n, 1)
+    b = b / b.sum()
+    Z = []
+    A = []
+    dW = []
+    db = []
+    dZ = []
+    dA = []
+    return W, b, Z, A, dW, db, dZ, dA
 
-    # register lose function and its derivative to dictionary loseLdic
-    def L_binaryClassfication(a, y):
-        return -(y * np.log(a) + (1 - y) * np.log(1 - a))
 
-    def L_binaryClassfication_(a, y):
-        return -(y / (a + 0.1**8) + (1 - y) / (1 - a + 0.1**8))
+# batch training
+def train(getXY, itr, a):
+    # define net structure and initialize parameters
+    m = 128
+    W1, b1, Z1, A1, dW1, db1, dZ1, dA1 = get_pars(28 * 28, 28)
+    W2, b2, Z2, A2, dW2, db2, dZ2, dA2 = get_pars(28, 16)
+    W3, b3, Z3, A3, dW3, db3, dZ3, dA3 = get_pars(16, 10)
 
-    def L_regression(a, y):
-        return (a - y)**2
+    train_loss = []
+    dev_loss = []
 
-    def L_regression_(a, y):
-        return 2 * (a - y)
+    for i in range(0, itr):
+        trainA0, trainY, devA0, devY = getXY()
 
-    def L_cross_entropy(a, y):
-        return -y*np.log(a)
+        # train
+        # forward
+        A0 = trainA0
+        Z1, A1 = forward(A0, W1, b1, relu)
+        Z2, A2 = forward(A1, W2, b2, relu)
+        Z3, A3 = forward(A2, W3, b3, softmax)
 
-    def L_cross_entropy_(a, y):
-        return -y/(a + 0.1**8)
+        # get loss
+        los = L_cross_entropy(A3, trainY)
+        train_loss.append(los.sum() / m)
 
-    def load_data_piece(self, A_0, y=np.array([])):
-        if len(self.A_list) == 0:
-            self.A_list.append(A_0)
-            self.n_list.append(A_0.shape[0])
-        else:
-            self.A_list[0] = A_0.tolist()
-            self.n_list[0] = A_0.shape[0]
-        self.y = y.tolist()
-        self.m = A_0.shape[1]
+        # backward propagation
+        dA3 = los * L_cross_entropy_(A3, trainY)
+        dA2, dW3, db3, dZ3 = backward(A2, W3, Z3, softmax_, dA3)
+        dA1, dW2, db2, dZ2 = backward(A1, W2, Z2, relu_, dA2)
+        dA0, dW1, db1, dZ1 = backward(A0, W1, Z1, relu_, dA1)
 
-    def creat_neural_network(self, n_x=0, m=0):
-        """
-        if you give the m_x and m of input layer, the net will begin with it, so the X's shape must satisfy your givens
-        :param n_x:
-        :param m:
-        :return:
-        """
-        self.G_list.append([])
-        if len(self.n_list) == 0:
-            self.A_list.append(np.zeros((n_x, m), dtype=self.np_dtype).tolist())
-            self.n_list.append(n_x)
-            self.m = m
-        self.Z_list.append([])
-        self.W_list.append([])
-        self.b_list.append([])
-        pattern_layer = re.compile(r"(relu|leakyRelu|sigmoid|softmax)\s*(\d+)")
-        while True:
-            str = input("activation(relu, leakyrelu, sigmoid, softmax) with a number of units:")
-            if str=="end": break
-            match = pattern_layer.match(str)
-            if match:
-                n_l = int(match.group(2))
-                self.n_list.append(n_l)
-                self.l += 1
-                self.G_list.append(match.group(1))
-                self.W_list.append(self.a_random_array(n_l, self.n_list[self.l - 1], 0.001))
-                self.b_list.append(self.a_random_array(n_l, 1, 0.001))
-            else:
-                print("pattern inputted is wrong!, re-input for this network layer.")
+        print(i, "=================================================================")
+        print(b3.T)
 
-        #
-        pattern_lose = re.compile(r"(L_b|L_r|L_c)")
-        while True:
-            str = input("chose a lose function(L_r, L_b, L_c):")
-            match = pattern_lose.match(str)
-            if match:
-                self.loseFunction = match.group(1)
-                break
-            else:
-                print("pattern inputted is wrong!")
+        # refresh the data
+        W1 = W1 - a * dW1
+        b1 = b1 - a * db1
 
-    def a_random_array(self, row, col=1, mul=1):
-        return np.random.rand(row, col) * mul
+        W2 = W2 - a * dW2
+        b2 = b2 - a * db2
 
-    def show_all_parameters_pattern(self):
-        for i in range(0, self.l + 1):
-            print("======================================================================")
-            print("The ", i, "th", "layer with ", self.n_list[i], "units as below:")
-            Z = np.array(self.Z_list[i], dtype=self.np_dtype)
-            A = np.array(self.A_list[i], dtype=self.np_dtype)
-            W = np.array(self.W_list[i], dtype=self.np_dtype)
-            b = np.array(self.b_list[i], dtype=self.np_dtype)
-            print("G:", self.G_list[i])
-            print("Z", Z.shape)
-            # print(Z)
-            print("A:", A.shape)
-            # print(A)
-            print("W", W.shape)
-            # print(W)
-            print("b", b.shape)
-            # print(b)
-        print("======================================================================")
-        print("y:", np.array(self.y).shape)
+        W3 = W3 - a * dW3
+        b3 = b3 - a * db3
 
-    # batch training
-    def piece_train_network(self, itr, a):
-        for i in range(0, itr):
-            self.forward()
-            lose_itr = self.lose()
-            self.batch_lose_list.append(lose_itr.sum() / self.m)
-            self.backward(a, lose_itr)
+    plt.plot(train_loss)
+    plt.plot(dev_loss)
+    plt.show()
 
-    def forward(self):
-        del self.A_list[1:]
-        del self.Z_list[1:]
-        A_front = np.array(self.A_list[0], dtype=self.np_dtype)
-        for i in range(1, self.l + 1):
-            W = np.array(self.W_list[i], dtype=self.np_dtype)
-            b = np.array(self.b_list[i], dtype=self.np_dtype)
 
-            # A_1 forward propagate to Z
-            Z = W.dot(A_front) + b
+train_loader = torch.utils.data.DataLoader(
+    torchvision.datasets.MNIST('./../data/', train=True, download=False,
+                               transform=torchvision.transforms.Compose([
+                                   torchvision.transforms.ToTensor(),
+                                   torchvision.transforms.Normalize(
+                                       (0.1307,), (0.3081,))
+                               ])),
+    batch_size=128, shuffle=True)
 
-            # Z forward propagate to A
-            A = []
-            if self.G_list[i] == "softmax":                                 # softmax layer
-                maxZ =  Z.max(axis=0)
-                A = np.array(list(map(self.actiGdic[self.G_list[i]],
-                                      Z.flatten('C'),
-                                      maxZ.repeat(self.n_list[i]))),
-                             dtype=self.np_dtype
-                             ).reshape(self.n_list[i], -1)
-            else:                                                           # relu, leakyRelu, sigmoid, tanh
-                A = np.array(list(map(self.actiGdic[self.G_list[i]], Z.flatten('C'))),
-                             dtype=self.np_dtype
-                             ).reshape(self.n_list[i], -1)
 
-            # refressh the A and Z with results
-            self.Z_list.append(Z.tolist())
-            self.A_list.append(A.tolist())
-            A_front = A
+test_loader = torch.utils.data.DataLoader(
+    torchvision.datasets.MNIST('./../data/', train=False, download=False,
+                               transform=torchvision.transforms.Compose([
+                                   torchvision.transforms.ToTensor(),
+                                   torchvision.transforms.Normalize(
+                                       (0.1307,), (0.3081,))
+                               ])),
+    batch_size=128, shuffle=True)
 
-            # debug
-            if i == self.l and self.debug:
-                print("=======================================================================")
-                print("W:", W.shape, W.min(), W.mean(), W.max(), W.sum())
-                print("Z:", Z.shape, Z.min(), Z.mean(), Z.max(), Z.sum())
-                print("A:", A.shape, A.min(), A.mean(), A.max(), A.sum())
 
-    def lose(self):
-        y_hat = np.array(self.A_list[self.l], dtype=self.np_dtype)
-        y = np.array(self.y, dtype=self.np_dtype)
-        if y_hat.shape == y.shape:
-            return np.array(list(map(self.loseLdic[self.loseFunction],
-                                 y_hat.flatten('C'),
-                                 y.flatten('C'))),
-                            dtype=self.np_dtype
-                            ).reshape(self.n_list[self.l], -1)
-        else:
-            print("the last layer did not pattern the format of y")
-            exit(-1)
+def reshape(imgs, labels):
+    img_shape = np.array(imgs).shape
+    x = np.array(imgs).flatten('C').reshape(-1, img_shape[2] * img_shape[3], order='C').T
+    x = x / x.sum()
+    y = np.array([np.array(labels).tolist()])
+    softmax_y = np.zeros((10, y.shape[1]))
+    for i in range(0, y.shape[1]):
+        softmax_y[y[0, i], i] = 1
+    return x, softmax_y
 
-    def backward(self, a, lose):
-        dA = lose * np.array(list(map(self.loseLdic[self.loseFunction+"_"],
-                                      np.array(self.A_list[self.l]).flatten('C'),
-                                      np.array(self.y).flatten('C'))),
-                             dtype=self.np_dtype
-                             ).reshape(self.n_list[self.l], -1)
-        for i in range(self.l, 0, -1):
-            Z = np.array(self.Z_list[i], dtype=self.np_dtype)
-            W = np.array(self.W_list[i], dtype=self.np_dtype)
-            b = np.array(self.b_list[i], dtype=self.np_dtype)
-            A_1 = np.array(self.A_list[i-1], dtype=self.np_dtype)
 
-            # dA backward propagate to Z
-            dZ = []
-            if self.G_list[i] == "softmax":
-                sumA = np.array(self.A_list[i]).sum(axis=0, dtype=self.np_dtype)
-                dZ = dA * np.array(list(map(self.actiGdic[self.G_list[i] + "_"],
-                                            Z.flatten('C'),
-                                            sumA.repeat(self.n_list[i]))),
-                                   dtype=self.np_dtype
-                                   ).reshape(self.n_list[i], -1)
-            else:
-                dZ = dA * np.array(list(map(self.actiGdic[self.G_list[i]+"_"], Z.flatten('C'))),
-                                   dtype=self.np_dtype
-                                   ).reshape(self.n_list[i], -1)
+def getXY():
+    train_batch = enumerate(train_loader)
+    batch_idx, (train_imgs, train_labels) = next(train_batch)
+    train_x, train_y = reshape(train_imgs, train_labels)
 
-            # dZ backward propagate to W and b
-            dW = np.dot(dZ, A_1.T) / self.m
-            db = np.sum(dZ, axis=1, keepdims=True) / self.m
-            dA = np.dot(W.T, dZ)
+    test_batch = enumerate(test_loader)
+    batch_idx, (test_imgs, test_labels) = next(test_batch)
+    test_x, test_y = reshape(test_imgs, test_labels)
 
-            # refresh the W and b with results of dW and db
-            W = W - a * dW
-            b = b - a * db
-            self.W_list[i] = W.tolist()
-            self.b_list[i] = b.tolist()
+    return train_x, train_y, test_x, test_y
 
-            if self.debug:
-                print("--", i, "th dW -----------------------------------------------------------------------")
-                print("dW:", dW.shape, dW.min(), dW.mean(), dW.max(), dW.sum())
-    #
+if __name__ == '__main__':
+    train(getXY, 10000, 0.003)
 
-    def record_train_acc_softmax(self):
-        y_hat = np.array(self.A_list[self.l])
-        y = np.array(self.y)
-        y_predict = y_hat.argmax(axis=0)
-        self.train_acc.append((y == y_predict).sum()/y.shape[1])
-        return
 
-    def show_train_dev_loss(self):
-        plt.plot(range(1, len(self.batch_lose_list)+1), self.batch_lose_list, )
-        plt.show()
 
-    def show_acc(self):
-        plt.plot(range(1, len(self.train_acc)+1), self.train_acc, '-')
-        # plt.plot(range(1, len(self.dev_acc)), self.dev_acc, '-')
-        plt.show()
 
-    def detect(self, x):
-        A_0 = np.zeros((self.n_list[0], self.m), dtype=self.np_dtype)
-        A_0[:, 0] = x[:, 0]
-        self.A_list[0] = A_0
-        self.forward()
-        return self.A_list[self.l]
 
-    def save_weights(self):
-        date = time.strftime("%Y-%m-%d %H:%M:%S" + time.localtime())
-        with open('./weights/'+date+'.json', 'w') as weights_json_F:
-            weights = {
-                'G_list': self.G_list,
-                'W_list': self.W_list,
-                'b_list': self.b_list,
-                'loseFunction': self.loseFunction,
-                'l': self.l,
-                'n_list': self.n_list,
-            }
-            weights_json = json.dumps(weights)
-            weights_json_F.write(weights_json)
-            weights_json_F.close()
 
-    def load_weights(self, date):
-        with open('./weights/' + date + '.json', 'w') as weights_json_F:
-            weights_json = weights_json_F.read()
-            weights = json.loads(weights_json)
-            self.G_list = weights['G_list']
-            self.W_list = weights['W_list']
-            self.b_list = weights['b_list']
-            self.loseFunction = weights['loseFunction']
-            self.l = weights['l']
-            self.n_list = weights['n_list']
-            weights_json_F.close()
+
+
+
+
+
+
 
 
 def house_price():
@@ -376,104 +198,10 @@ def house_price():
     x = np.array(df_x[features].T,)
     y = np.array([np.array(df_y['SalePrice'].T).tolist()])
 
-    neuralNet.load_data_piece(x, y)
-    neuralNet.creat_neural_network()
-    neuralNet.piece_train_network(10, 0.3)
-    neuralNet.show_train_dev_loss()
 
 
-def minist_hand_writing():
-    train_loader = torch.utils.data.DataLoader(
-        torchvision.datasets.MNIST('./../data/', train=True, download=False,
-                                   transform=torchvision.transforms.Compose([
-                                       torchvision.transforms.ToTensor(),
-                                       torchvision.transforms.Normalize(
-                                           (0.1307,), (0.3081,))
-                                   ])),
-        batch_size=128, shuffle=True)
-
-    test_loader = torch.utils.data.DataLoader(
-        torchvision.datasets.MNIST('./../data/', train=False, download=False,
-                                   transform=torchvision.transforms.Compose([
-                                       torchvision.transforms.ToTensor(),
-                                       torchvision.transforms.Normalize(
-                                           (0.1307,), (0.3081,))
-                                   ])),
-        batch_size=1, shuffle=True)
-
-    train_batch = enumerate(train_loader)
-    neuralNet = NeuralNet()
-    neuralNet.creat_neural_network(28*28, 128)
-    neuralNet.debug = True
-
-    for i in range(0, 100):
-        batch_idx, (train_imgs, train_labels) = next(train_batch)
-        img_shape = np.array(train_imgs).shape
-
-        x = np.array(train_imgs).flatten('C').reshape(img_shape[2]*img_shape[3], -1, order='C')
-        y = np.array([np.array(train_labels).tolist()])
-        softmax_y = np.zeros((10, y.shape[1]))
-        for i in range(0, y.shape[1]):
-            softmax_y[y[0, i], i] = 1
-        neuralNet.load_data_piece(x, softmax_y)
-
-        with open("train_controlling.json", 'r') as conF:
-            conStr = conF.read()
-            conJson = json.loads(conStr)
-
-            if conJson["save_weights_itr"] == i:
-                neuralNet.save_weights()
-            if conJson["continue_learning"] == 1:
-                neuralNet.piece_train_network(conJson["batch_itr"], conJson["learning_rate"])
-                neuralNet.record_train_acc_softmax()
-
-            else:
-                break
-            conF.close()
-
-    neuralNet.show_train_dev_loss()
-    neuralNet.show_acc()
 
 
-    for i in range(0, 64):
-        cmd = input("========================================================================================")
-        if cmd == "save_weigths":
-            neuralNet.save_weights()
-        elif cmd == "load_weigths":
-            date = input("date")
-            neuralNet.load_weights(date)
-        else:
-            y = np.array(neuralNet.y)
-            y_hat = np.array(neuralNet.A_list[neuralNet.l][i])
-            print(y.argmax(axis=0))
-            print(y_hat.argmax(axis=0))
 
 
-def test():
-    x = np.array(
-        [
-            [1, 2, 3, 4, 5, 6, 7, 8, 9],
-            [1, 2, 3, 4, 5, 6, 7, 8, 9],
-            [1, 2, 3, 4, 5, 6, 7, 8, 9],
-            [1, 2, 3, 4, 5, 6, 7, 8, 9],
-            [1, 2, 3, 4, 5, 6, 7, 8, 9],
-            [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        ]
-    )
-    y = np.array(
-        [
-            [0.06, 0.12, 0.18, 0.24, 0.30, 0.36, 0.42, 0.48, 0.54]
-        ]
-    )
 
-    neuralNet = NeuralNet()
-    neuralNet.load_data_piece(x, y)
-    neuralNet.creat_neural_network()
-    neuralNet.piece_train_network(100000, 0.03)
-    neuralNet.show_train_dev_loss()
-
-    print(neuralNet.detect(x))
-
-
-if __name__ == '__main__':
-    minist_hand_writing()
